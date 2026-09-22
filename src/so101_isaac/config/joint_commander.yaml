@@ -1,0 +1,25 @@
+joint_commander:
+  ros__parameters:
+    joint_names:
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_5
+      - gripper_joint
+
+    state_topic: /joint_states
+    command_topic: /joint_command
+
+    # How often a command is streamed to Isaac Sim.
+    rate_hz: 60.0
+
+    # Ramp limit, rad/s. The commanded angle moves towards the target at most
+    # this fast, so `ros2 param set` never makes the arm jump.
+    max_speed: 1.0
+
+    # Reject targets outside the URDF joint limits.
+    clamp_to_limits: true
+
+    # Pose used by the ~/go_home service, radians, same order as joint_names.
+    home: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]

@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: so101-isaac
+Version: 0.1.0
+Summary: Isaac Sim scene for the SO-101 arm on a table, bridged to ROS 2.
+Maintainer: hung
+Maintainer-email: hung@todo.todo
+License: Apache-2.0

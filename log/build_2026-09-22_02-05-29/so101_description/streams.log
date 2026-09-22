@@ -1,0 +1,46 @@
+[0.007s] Invoking command in '/home/pread/Project/env_robot/build/so101_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pread/Project/env_robot/install/so101_isaac:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com VIRTUAL_ENV_PROMPT=(env_isaac) /usr/bin/cmake --build /home/pread/Project/env_robot/build/so101_description -- -j20 -l20
+[0.040s] Invoked command in '/home/pread/Project/env_robot/build/so101_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pread/Project/env_robot/install/so101_isaac:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com VIRTUAL_ENV_PROMPT=(env_isaac) /usr/bin/cmake --build /home/pread/Project/env_robot/build/so101_description -- -j20 -l20
+[0.046s] Invoking command in '/home/pread/Project/env_robot/build/so101_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pread/Project/env_robot/install/so101_isaac:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com VIRTUAL_ENV_PROMPT=(env_isaac) /usr/bin/cmake --install /home/pread/Project/env_robot/build/so101_description
+[0.053s] -- Install configuration: ""
+[0.053s] -- Execute custom install script
+[0.053s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/urdf/so101.urdf
+[0.053s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/urdf/so101.urdf.xacro
+[0.053s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/urdf/so101/payloads/Physics/mujoco.usda
+[0.054s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/urdf/so101/payloads/Physics/physics.usda
+[0.054s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/urdf/so101/payloads/Physics/physx.usda
+[0.054s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/urdf/so101/payloads/base.usda
+[0.054s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/urdf/so101/payloads/geometries.usd
+[0.054s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/urdf/so101/payloads/instances.usda
+[0.054s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/urdf/so101/payloads/materials.usda
+[0.054s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/urdf/so101/payloads/robot.usda
+[0.054s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/urdf/so101/so101.usda
+[0.054s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/Moving_Jaw_SO101_v1.stl
+[0.054s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/base_link.stl
+[0.055s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/base_link_collision.stl
+[0.055s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/link_2.stl
+[0.055s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/link_2_collision.stl
+[0.055s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/link_3.stl
+[0.055s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/link_3_collision.stl
+[0.055s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/link_4.stl
+[0.055s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/link_4_collision.stl
+[0.055s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/link_5.stl
+[0.055s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/link_5_collision.stl
+[0.055s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/meshes/wrist_roll_follower_so101_v1.stl
+[0.055s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/launch/view_robot.launch.py
+[0.056s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/rviz/view_robot.rviz
+[0.056s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/ament_index/resource_index/package_run_dependencies/so101_description
+[0.056s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/ament_index/resource_index/parent_prefix_path/so101_description
+[0.056s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/environment/ament_prefix_path.sh
+[0.056s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/environment/ament_prefix_path.dsv
+[0.056s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/environment/path.sh
+[0.056s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/environment/path.dsv
+[0.057s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/local_setup.bash
+[0.057s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/local_setup.sh
+[0.057s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/local_setup.zsh
+[0.057s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/local_setup.dsv
+[0.057s] -- Symlinking: /home/pread/Project/env_robot/install/so101_description/share/so101_description/package.dsv
+[0.063s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/ament_index/resource_index/packages/so101_description
+[0.063s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/cmake/so101_descriptionConfig.cmake
+[0.063s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/cmake/so101_descriptionConfig-version.cmake
+[0.063s] -- Up-to-date symlink: /home/pread/Project/env_robot/install/so101_description/share/so101_description/package.xml
+[0.064s] Invoked command in '/home/pread/Project/env_robot/build/so101_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pread/Project/env_robot/install/so101_isaac:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com VIRTUAL_ENV_PROMPT=(env_isaac) /usr/bin/cmake --install /home/pread/Project/env_robot/build/so101_description

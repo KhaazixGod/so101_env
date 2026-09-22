@@ -1,0 +1,1 @@
+/home/pread/Project/env_robot/src/so101_description/launch/view_robot.launch.py

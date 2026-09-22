@@ -1,0 +1,297 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="so101">
+
+  <!-- ================= 0. WORLD LINK ================= -->
+  <link name="world"/>
+
+  <joint name="world_to_base" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+  </joint>
+
+  <!-- ================= 1. BASE LINK ================= -->
+  <link name="base_link">
+    <inertial>
+      <mass value="0.234577"/>
+      <origin xyz="-4.17e-05 0.032687 0.032297" rpy="0 0 0"/>
+      <inertia ixx="0.000310491" ixy="2.68e-07" ixz="-6.02e-07" iyy="0.000247507" iyz="2.22e-05" izz="0.000303595"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 -0.0704 0.016" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/base_link.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="beige"><color rgba="0.917 0.917 0.917 1.0"/></material>
+    </visual>
+    <collision>
+      <!-- Đã sửa: Copy y hệt visual -->
+      <origin xyz="0 -0.0704 0.016" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/base_link_collision.stl" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ================= JOINT 1 ================= -->
+  <joint name="joint_1" type="revolute">
+    <origin xyz="0 0.031 0.05955" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <parent link="base_link"/>
+    <child link="link_2"/>
+    <limit effort="2.5" velocity="3.0" lower="-3.14159" upper="0.90101"/>
+    <dynamics damping="0.05" friction="0.02"/>
+  </joint>
+
+  <!-- ================= 2. LINK 2 ================= -->
+  <link name="link_2">
+    <inertial>
+      <mass value="0.17508"/>
+      <origin xyz="0.027311 0.067652 0.015235" rpy="0 1.05471 0"/>
+      <inertia ixx="0.000301075" ixy="2.74e-06" ixz="5.38e-06" iyy="7.07e-05" iyz="2.06e-06" izz="0.000296271"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.037878 -0.1014 -0.021491" rpy="0 1.05471 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/link_2.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="orange"><color rgba="0.917 0.917 0.917 1.0"/></material>
+    </visual>
+    <collision>
+      <!-- Đã sửa: Copy y hệt visual -->
+      <origin xyz="-0.037878 -0.1014 -0.021491" rpy="0 1.05471 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/link_2_collision.stl" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ================= JOINT 2 ================= -->
+  <joint name="joint_2" type="revolute">
+    <origin xyz="0.042226 0.11745 -0.012719" rpy="0 1.05471 0"/>
+    <axis xyz="-1 0 0"/>
+    <parent link="link_2"/>
+    <child link="link_3"/>
+    <limit effort="2.5" velocity="3.0" lower="-1.20475" upper="1.93684"/>
+    <dynamics damping="0.05" friction="0.02"/>
+  </joint>
+
+  <!-- ================= 3. LINK 3 ================= -->
+  <link name="link_3">
+    <inertial>
+      <mass value="0.218075"/>
+      <origin xyz="-0.032577 0.085013 0.040906" rpy="0.366045 0 0"/>
+      <inertia ixx="0.000438117" ixy="-2.84e-06" ixz="-2.58e-06" iyy="0.000246471" iyz="-0.000150744" izz="0.00040782"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.0319 -0.177865 -0.14743" rpy="0.366045 0 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/link_3.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="blue"><color rgba="0.917 0.917 0.917 1.0"/></material>
+    </visual>
+    <collision>
+      <!-- Đã sửa: Copy y hệt visual -->
+      <origin xyz="-0.0319 -0.177865 -0.14743" rpy="0.366045 0 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/link_3_collision.stl" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ================= JOINT 3 ================= -->
+  <joint name="joint_3" type="revolute">
+    <origin xyz="0 0.106979 0.078865" rpy="0.366045 0 0"/>
+    <axis xyz="-1 0 0"/>
+    <parent link="link_3"/>
+    <child link="link_4"/>
+    <limit effort="2.5" velocity="3.0" lower="-1.55826" upper="1.23427"/>
+    <dynamics damping="0.05" friction="0.02"/>
+  </joint>
+
+  <!-- ================= 4. LINK 4 ================= -->
+  <link name="link_4">
+    <inertial>
+      <mass value="0.188834"/>
+      <origin xyz="-0.03212 0.010894 0.085073" rpy="-0.161994 0 0"/>
+      <inertia ixx="0.000336984" ixy="6.65e-08" ixz="-5.91e-06" iyy="0.000407646" iyz="-3.08e-05" izz="0.000112943"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.03185 -0.360064 -0.051957" rpy="-0.161994 0 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/link_4.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="yellow"><color rgba="0.917 0.917 0.917 1.0"/></material>
+    </visual>
+    <collision>
+      <!-- Đã sửa: Copy y hệt visual -->
+      <origin xyz="-0.03185 -0.360064 -0.051957" rpy="-0.161994 0 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/link_4_collision.stl" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ================= JOINT 4 ================= -->
+  <joint name="joint_4" type="revolute">
+    <origin xyz="0 0.017637 0.139228" rpy="-0.161994 0 0"/>
+    <axis xyz="-1 0 0"/>
+    <parent link="link_4"/>
+    <child link="link_5"/>
+    <limit effort="2.5" velocity="3.0" lower="-0.210268" upper="2.58226"/>
+    <dynamics damping="0.05" friction="0.02"/>
+  </joint>
+
+  <!-- ================= 5. LINK 5 ================= -->
+  <link name="link_5">
+    <inertial>
+      <mass value="0.064431"/>
+      <origin xyz="-0.029124 -0.036838 0.007911" rpy="-0.210268 0 0"/>
+      <inertia ixx="3.40e-05" ixy="5.23e-06" ixz="-1.22e-06" iyy="5.34e-05" iyz="4.95e-06" izz="7.60e-05"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.0319 -0.386486 -0.172736" rpy="-0.210268 0 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/link_5.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="grey"><color rgba="0.917 0.917 0.917 1.0"/></material>
+    </visual>
+    <collision>
+      <!-- Đã sửa: Copy y hệt visual -->
+      <origin xyz="-0.0319 -0.386486 -0.172736" rpy="-0.210268 0 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/link_5_collision.stl" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ================= JOINT 5 ================= -->
+  <joint name="joint_5" type="revolute">
+    <origin xyz="-0.03205 -0.072077 0.015383" rpy="-0.210268 0 0"/>
+    <axis xyz="0 1 0"/>
+    <parent link="link_5"/>
+    <child link="wrist_roll_follower_so101_v1"/>
+    <limit effort="2.5" velocity="3.0" lower="-0.79539" upper="0.78539"/>
+  </joint>
+
+  <!-- ================= 6. WRIST ROLL ================= -->
+  <link name="wrist_roll_follower_so101_v1">
+    <inertial>
+      <mass value="0.05249"/>
+      <origin xyz="-0.003111 -0.032711 -0.007317" rpy="0 -1.1612 0"/>
+      <inertia ixx="3.92e-05" ixy="-1.59e-06" ixz="-2.60e-06" iyy="1.33e-05" iyz="-3.47e-06" izz="3.53e-05"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.229013 -0.26822 -0.099262" rpy="0 -1.1612 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/wrist_roll_follower_so101_v1.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="white"><color rgba="0.917 0.917 0.917 1.0"/></material>
+    </visual>
+    <collision>
+      <!-- Đã sửa: Copy y hệt visual -->
+      <origin xyz="0.229013 -0.26822 -0.099262" rpy="0 -1.1612 0"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/wrist_roll_follower_so101_v1.stl" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ================= GRIPPER JOINT ================= -->
+  <joint name="gripper_joint" type="revolute">
+    <origin xyz="0.019722 -0.026609 0.004746" rpy="0 -1.1612 0"/>
+    <axis xyz="0 0 -1"/>
+    <parent link="wrist_roll_follower_so101_v1"/>
+    <child link="moving_jaw_so101_v1"/>
+    <limit effort="2.5" velocity="3.0" lower="-0.451427" upper="0.59577"/>
+  </joint>
+
+  <!-- ================= 7. MOVING JAW ================= -->
+  <link name="moving_jaw_so101_v1">
+    <inertial>
+      <mass value="0.007332"/>
+      <origin xyz="0.018596 -0.030687 0.014666" rpy="0 0 0.59577"/>
+      <inertia ixx="2.38e-06" ixy="1.12e-06" ixz="-1.67e-07" iyy="9.55e-07" iyz="2.83e-07" izz="2.90e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.125599 -0.206751 -0.2334" rpy="0 0 0.59577"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/Moving_Jaw_SO101_v1.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="grey"><color rgba="0.6 0.6 0.6 1.0"/></material>
+    </visual>
+    <collision>
+      <origin xyz="0.125599 -0.206751 -0.2334" rpy="0 0 0.59577"/>
+      <geometry>
+        <mesh filename="package://so101_description/meshes/Moving_Jaw_SO101_v1.stl" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+
+<!-- ================= ĐỌC FILE YAML ================= -->
+  <!-- Tìm và đọc file initial_positions.yaml từ package MoveIt -->
+  <xacro:property name="initial_positions_file" value="$(find so101_moveit_config)/config/initial_positions.yaml" />
+  <xacro:property name="initial_positions" value="${xacro.load_yaml(initial_positions_file)['initial_positions']}" />
+
+  <!-- ================= ROS2 CONTROL ================= -->
+  <ros2_control name="GazeboSimSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+    
+    <joint name="joint_1">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">${initial_positions['joint_1']}</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    
+    <joint name="joint_2">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">${initial_positions['joint_2']}</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    
+    <joint name="joint_3">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">${initial_positions['joint_3']}</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    
+    <joint name="joint_4">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">${initial_positions['joint_4']}</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    
+    <joint name="joint_5">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">${initial_positions['joint_5']}</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    
+    <joint name="gripper_joint">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">${initial_positions['gripper_joint']}</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+
+  <!-- Plugin Gazebo -->
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(find so101_gazebo)/config/so101_controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+</robot>

@@ -1,0 +1,1 @@
+/home/pread/Project/env_robot/build/so101_isaac/isaac/so101_table_scene.py
