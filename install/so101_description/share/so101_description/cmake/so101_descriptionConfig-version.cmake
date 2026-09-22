@@ -1,1 +1,0 @@
-/home/pread/Project/env_robot/build/so101_description/ament_cmake_core/so101_descriptionConfig-version.cmake

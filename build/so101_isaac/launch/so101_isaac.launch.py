@@ -1,1 +1,0 @@
-/home/pread/Project/env_robot/src/so101_isaac/launch/so101_isaac.launch.py
