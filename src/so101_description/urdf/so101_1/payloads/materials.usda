@@ -1,0 +1,57 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.2"
+    }
+    doc = """Generated from Composed Stage of root layer /tmp/tmpz91ncmwg/so101.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_so101_cxbug9g2/usdex_so101/so101.usdc
+
+
+Generated from Composed Stage of root layer /tmp/urdf_import_so101_cxbug9g2/temp_so101/so101.usd
+
+
+Generated from Composed Stage of root layer /home/pread/Project/env_robot/src/so101_description/urdf/so101_1/payloads/base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Scope "Materials"
+{
+    def Material "beige"
+    {
+        color3f inputs:diffuseColor = (0.82147276, 0.82147276, 0.82147276)
+        float inputs:metallic = 0
+        float inputs:opacity = 1
+        float inputs:roughness = 0.5
+        token inputs:wrapMode = "repeat"
+        token outputs:displacement (
+            displayGroup = "Outputs"
+        )
+        prepend token outputs:displacement.connect = </Materials/beige/PreviewSurface.outputs:displacement>
+        token outputs:surface (
+            displayGroup = "Outputs"
+        )
+        prepend token outputs:surface.connect = </Materials/beige/PreviewSurface.outputs:surface>
+        token outputs:volume (
+            displayGroup = "Outputs"
+        )
+
+        def Shader "PreviewSurface" (
+            apiSchemas = ["NodeDefAPI"]
+        )
+        {
+            token info:id = "UsdPreviewSurface"
+            prepend color3f inputs:diffuseColor.connect = </Materials/beige.inputs:diffuseColor>
+            prepend float inputs:metallic.connect = </Materials/beige.inputs:metallic>
+            prepend float inputs:opacity.connect = </Materials/beige.inputs:opacity>
+            prepend float inputs:roughness.connect = </Materials/beige.inputs:roughness>
+            token outputs:displacement
+            token outputs:surface
+        }
+    }
+}
+

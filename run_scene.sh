@@ -45,6 +45,19 @@ if [[ -f "$WS/install/setup.bash" ]]; then
   set -u
   SCENE="$WS/install/so101_isaac/share/so101_isaac/isaac/so101_table_scene.py"
   USD="$WS/install/so101_description/share/so101_description/urdf/so101/so101.usda"
+
+  # install/ is supposed to be `colcon build --symlink-install`'d, i.e. SCENE
+  # should be a symlink back into src/ -- so edits there take effect on the
+  # next run with no rebuild. It has repeatedly turned into a plain COPY
+  # instead (seemingly from something -- an IDE, an editor extension -- doing
+  # a non-symlink `colcon build` in the background), silently running stale
+  # code with no error, which is a very confusing thing to debug. Catch it
+  # here instead.
+  if [[ -f "$SCENE" && ! -L "$SCENE" ]]; then
+    echo "warning: $SCENE is a plain file, not a symlink -- install/ is stale" >&2
+    echo "         (colcon build without --symlink-install ran at some point)." >&2
+    echo "         Fix: rm -rf build/so101_isaac install/so101_isaac && colcon build --symlink-install --packages-select so101_isaac" >&2
+  fi
 else
   SCENE="$WS/src/so101_isaac/isaac/so101_table_scene.py"
   USD="$WS/src/so101_description/urdf/so101/so101.usda"

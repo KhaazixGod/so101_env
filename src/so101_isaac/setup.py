@@ -15,6 +15,17 @@ setup(
         (os.path.join("share", package_name, "launch"), glob("launch/*.launch.py")),
         (os.path.join("share", package_name, "config"), glob("config/*.yaml")),
         (os.path.join("share", package_name, "isaac"), glob("isaac/*.py")),
+        # conveyor_ref/ is a subdirectory -- glob("isaac/*.py") above doesn't
+        # recurse into it, so it needs its own data_files entry (setuptools
+        # data_files has no recursive-glob option; each destination dir needs
+        # its own tuple). Without this, so101_table_scene.py's
+        # --conveyor-engine warp builds fine but conveyor_physics.py's
+        # `import cb_kernels` (etc.) fails at runtime in an installed
+        # (non-symlink) package, since conveyor_ref/ never reaches install/.
+        (
+            os.path.join("share", package_name, "isaac", "conveyor_ref"),
+            glob("isaac/conveyor_ref/*.py") + glob("isaac/conveyor_ref/*.md"),
+        ),
     ],
     install_requires=["setuptools"],
     zip_safe=True,

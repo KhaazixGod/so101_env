@@ -84,6 +84,7 @@ The scene is authored procedurally, so nothing is fetched from Nucleus:
   /World/PhysicsScene      gravity, TGS solver, 120 Hz
   /World/Ground            20x20 m static box floor
   /World/Table             1.20 x 0.80 m top at z = 0.74, four legs, static colliders
+  /World/Conveyor          belt + 4 legs, against --table-edge (isaacsim.asset.gen.conveyor)
   /World/so101             reference to so101.usda, Physics variant = "physx"
   /World/ActionGraph       the ROS 2 bridge
 ```
@@ -91,6 +92,70 @@ The scene is authored procedurally, so nothing is fetched from Nucleus:
 The robot is snapped onto the table top using its own bounding box
 (`--no-auto-place` turns that off), because the URDF rotates the model 90° about
 X and `base_link`'s origin is not its lowest point.
+
+### Table edge, robot placement, conveyor belt
+
+`--table-edge {front,back,left,right}` (default `front`) names one of the
+table's four edges and drives two defaults at once:
+
+- `--robot-xy`, when left unset, places the robot `--robot-edge-margin`
+  (default 0.08 m) in from that edge, centred on the other axis — "right at
+  the edge" rather than in the middle of the table.
+- The conveyor belt (below) attaches to the same edge.
+
+`front`/`back` are the table's two **long** edges (run along X, at
+`y = -width/2` / `y = +width/2`); `left`/`right` are the two **short** edges
+(run along Y, at `x = -length/2` / `x = +length/2`). With the default
+1.20 x 0.80 m top, front/back are the "horizontal" edges in a landscape view of
+the table — that's the reading `front` (the default) assumes; pass
+`--table-edge back/left/right` if you meant a different one.
+
+The belt is a **kinematic** rigid body (`RigidBodyAPI` + `kinematicEnabled`):
+PhysX never moves it, but a `PhysxSurfaceVelocityAPI` (applied by the
+`IsaacConveyor` OmniGraph node from `isaacsim.asset.gen.conveyor`, at runtime,
+once the belt already has a `RigidBodyAPI`) still drags whatever rests on top.
+
+The belt's box is always built with its length along its own local X, then
+rotated (`--conveyor-yaw`, degrees, **default 90**) on top of an
+edge-dependent base orientation:
+
+- `--conveyor-yaw 0`: the belt feeds straight toward/away from the table
+  (perpendicular to the edge, extending outward by `--conveyor-length`).
+- `--conveyor-yaw 90` (**the default**): the belt runs **alongside** the
+  edge instead (parallel to it, reaching only `--conveyor-width`/2 out from
+  the table) — a robot at the edge reaches sideways into a belt passing by,
+  rather than having the belt feed straight into it.
+
+Confirmed empirically (not assumed): `IsaacConveyor`'s `inputs:direction` is
+read in the belt's own **local** frame — a belt rotated 90° about Z with
+`inputs:direction=(1,0,0)` drags things along world +Y, not +X. That's what
+lets the code keep `inputs:direction` fixed at local `(±1,0,0)` at any yaw,
+while the belt's *position* is computed from an oriented-bounding-box
+projection (how far the rotated box's silhouette reaches back along the
+table's own outward axis) so it still sits flush against the edge — with a
+gap of exactly `--conveyor-gap` — regardless of yaw.
+
+```bash
+./run_scene.sh --table-edge front                          # default: belt runs alongside the -Y edge
+./run_scene.sh --conveyor-yaw 0                             # old behaviour: belt feeds into the table
+./run_scene.sh --table-edge right --conveyor-speed -0.15    # short edge, reversed travel direction
+
+ros2 launch so101_isaac so101_isaac.launch.py table_edge:=back conveyor_speed:=0.3
+ros2 launch so101_isaac so101_isaac.launch.py conveyor:=false   # table + arm only, no belt
+```
+
+`--conveyor-length`/`--conveyor-width`/`--conveyor-thickness` size the belt;
+`--conveyor-gap` sets the clearance from the table edge (`0` = touching);
+`--conveyor-offset` shifts it sideways along the edge. `--conveyor-speed` is
+signed m/s along the belt's direction of travel (which is `--conveyor-yaw`
+away from "toward the table"); the belt's top sits flush with the table top
+by default.
+
+Verified live, both orientations: at `--conveyor-yaw 0` a dropped cube moved
+from `y=-0.81` to `y=-0.44` in 2 s (≈0.186 m/s, toward the table); at the
+current default (`--conveyor-yaw 90`) a dropped cube moved from `x=0.00` to
+`x=0.39` in 1.5 s (exactly 0.200 m/s, alongside the edge) — both against a
+configured 0.2 m/s belt speed.
 
 ### Drives
 
@@ -102,12 +167,54 @@ therefore writes `stiffness`, `damping` and the home `targetPosition` onto each
 drive at startup (`--stiffness` / `--damping`).
 
 Those are USD angular-drive units, i.e. **per degree**, not per radian. The
-defaults are `--stiffness 60 --damping 4`, picked by measurement: raising
+defaults are stiffness 60 / damping 4, picked by measurement: raising
 stiffness from 10 to 60 only cut the resting sag from 0.0096 rad to 0.0063 rad.
 A 6x stiffness increase buying a 1.5x error reduction means the residual is
 **bound by `maxForce`, not by stiffness** — 2.5 Nm is the real servo limit the
 URDF declares, and gravity eats most of it. Raising stiffness further will not
-help; raise `--max-force` if you want a stiffer arm than the real hardware.
+help; raise `max_force` if you want a stiffer arm than the real hardware.
+
+### Per-joint tuning
+
+`config/joint_drives.yaml` sets stiffness/damping/max_force per joint.
+Precedence, low to high:
+
+```
+hardcoded 60/4/None  <  yaml "default:"  <  --stiffness/--damping/--max-force
+  <  yaml "joints: <name>:"  <  --joint-drive (repeatable, wins over everything)
+```
+
+Edit the file for a permanent change:
+
+```yaml
+default:
+  stiffness: 60.0
+  damping: 4.0
+  max_force: null        # null keeps the URDF's own 2.5 Nm
+
+joints:
+  gripper_joint:
+    stiffness: 100.0
+    damping: 6.0
+    max_force: 1.0        # cap it below the arm's 2.5 Nm
+```
+
+Or override for one run without touching the file:
+
+```bash
+./run_scene.sh --joint-drive "joint_1:stiffness=90,damping=6" \
+               --joint-drive "gripper_joint:max_force=1.0"
+
+ros2 launch so101_isaac so101_isaac.launch.py \
+    joint_drive:="joint_1:stiffness=90,damping=6;gripper_joint:max_force=1.0"
+```
+
+A joint named under `joints:` (in the yaml) always wins over a global
+`--stiffness`/`--damping`/`--max-force` flag — that is the point of naming it.
+Leave `joints:` empty to let the global flags control every joint uniformly.
+`--joint-drive` and a bad `--drive-config` path both fail fast, before Isaac
+Sim boots, with a message naming the bad joint/key/path -- run `--help` for
+the exact rules.
 
 ## 5. Topics
 
@@ -233,3 +340,32 @@ A smoke test of the scene itself:
 - ROS 2's `setup.bash` reads variables it never defines, so any script that
   sources it under `set -u` dies with `AMENT_TRACE_SETUP_FILES: unbound
   variable`. `run_scene.sh` drops `set -u` around the source.
+- An Isaac Sim extension's Python package (e.g.
+  `isaacsim.asset.gen.conveyor`) is not on `sys.path` until the extension
+  manager actually enables it -- importing it at module load time, before any
+  extension has been turned on, always raises `ImportError` and, behind a
+  broad `except ImportError`, fails silently. `build_conveyor()` imports
+  `create_conveyor_belt` lazily, inside the function, after
+  `enable_conveyor_extension()` has already run in `main()`.
+- `set_extension_enabled_immediate()` can return before that extension's own
+  `on_startup()` (registering its OmniGraph node types) has actually
+  finished -- one `simulation_app.update()` afterward is not always enough,
+  unlike `isaacsim.ros2.bridge` which this one behavior differs from.
+  `enable_conveyor_extension()` polls `is_extension_enabled()` for a few
+  frames instead of checking once.
+- An XML comment containing `--` anywhere inside it (not just right before
+  `-->`) makes `package.xml` invalid XML. `catkin_pkg`'s parser then raises,
+  colcon's `ros` package-identification extension silently falls back to
+  treating the package as plain `python` instead of `ros.ament_python`, and
+  `colcon build` still reports success -- but the built package is invisible
+  to `ros2 pkg list` / `ros2 launch` (its `AMENT_PREFIX_PATH` hook is never
+  generated, only `PYTHONPATH`). If a package builds but `ros2 launch` can't
+  find it, check `python3 -c "from catkin_pkg.package import parse_package;
+  parse_package('src/<pkg>/package.xml')"` before anything else.
+- Two ROS graphs on the same machine with no explicit `ROS_DOMAIN_ID` (the
+  default is 0 for everyone) see each other's topics. A `/joint_states` from
+  an unrelated project publishing under the same domain will interleave with
+  ours on `/joint_states` since neither is namespaced, and a subscriber can
+  end up reading the other robot's joint names. Set `ROS_DOMAIN_ID` to
+  something project-specific if you run more than one ROS 2 project on this
+  machine at once.

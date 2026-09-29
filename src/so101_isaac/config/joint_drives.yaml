@@ -1,0 +1,31 @@
+# Angular drive gains for the SO-101, one entry per joint.
+#
+# Units are USD angular-drive convention: stiffness/damping act per DEGREE of
+# error (not radian). max_force is in Nm. Set max_force: null (or omit it) to
+# keep whatever so101_description's URDF authors for that joint (2.5 Nm on
+# every joint, from <limit effort="2.5".../> in so101.urdf.xacro).
+#
+# `default` applies to any joint not listed under `joints`. Precedence, low to
+# high (see so101_table_scene.py --help for the full rule):
+#   this file's `default:`  <  --stiffness/--damping/--max-force  <
+#   this file's `joints:`   <  --joint-drive
+#
+# A joint listed under `joints:` always wins over --stiffness/--damping/
+# --max-force -- that is the point of naming it here. Leave `joints:` empty
+# (as below) to let the CLI flags control every joint uniformly; add an entry
+# only for a joint you want pinned regardless of what a global flag passes.
+
+default:
+  stiffness: 10000.0
+  damping: 100.0
+  max_force: null
+
+joints: {}
+# Example -- pin the gripper stiffer than whatever --stiffness passes, and
+# cap its force below the arm's 2.5 Nm:
+#
+# joints:
+#   gripper_joint:
+#     stiffness: 100.0
+#     damping: 6.0
+#     max_force: 1.0
