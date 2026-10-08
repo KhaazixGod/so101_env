@@ -963,6 +963,33 @@ def configure_drives(stage: Usd.Stage, args: argparse.Namespace) -> None:
         prim.CreateAttribute("state:angular:physics:position", Sdf.ValueTypeNames.Float).Set(home_deg)
         prim.CreateAttribute("state:angular:physics:velocity", Sdf.ValueTypeNames.Float).Set(0.0)
 
+        _mark_actuated_dof(prim)
+
+
+# Index into RobotSchemaJointAPI's isaac:actuator[6], one flag per DOF.
+_ACTUATOR_AXIS_INDEX = {"X": 0, "Y": 1, "Z": 2}
+
+
+def _mark_actuated_dof(prim: Usd.Prim) -> None:
+    """Flag the joint's rotation axis as actuated via RobotSchema's JointAPI.
+
+    Fabric (isaacsim.robot.schema) looks up isaac:actuator to know which DOF a
+    joint drives; without it every joint logs an "attribute not found"
+    warning even though the PhysX angular drive above already works fine.
+    """
+    axis = UsdPhysics.RevoluteJoint(prim).GetAxisAttr().Get()
+    index = _ACTUATOR_AXIS_INDEX.get(axis)
+    if index is None:
+        carb.log_warn(f"[so101_table_scene] unexpected joint axis {axis!r} on {prim.GetPath()}, skipping isaac:actuator")
+        return
+
+    if "RobotSchemaJointAPI" not in prim.GetAppliedSchemas():
+        prim.AddAppliedSchema("RobotSchemaJointAPI")
+
+    flags = [False] * 6
+    flags[index] = True
+    prim.CreateAttribute("isaac:actuator", Sdf.ValueTypeNames.BoolArray).Set(flags)
+
 
 def build_action_graph(args: argparse.Namespace) -> None:
     """ROS 2 bridge graph: publish /joint_states, subscribe /joint_command."""
