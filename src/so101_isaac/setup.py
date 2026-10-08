@@ -37,6 +37,7 @@ setup(
     entry_points={
         "console_scripts": [
             "joint_commander = so101_isaac.joint_commander:main",
+            "esp_joint_bridge = so101_isaac.esp_joint_bridge:main",
         ],
     },
 )

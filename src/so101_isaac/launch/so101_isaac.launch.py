@@ -273,6 +273,25 @@ def generate_launch_description() -> LaunchDescription:
             "params_file",
             default_value=os.path.join(pkg_isaac, "config", "joint_commander.yaml"),
         ),
+        DeclareLaunchArgument(
+            "start_esp_bridge",
+            default_value="false",
+            description="also start the node that reads the ESP32-S3 (PCA9548A + AS5600) serial log "
+                        "and feeds the angles to joint_commander; requires start_commander:=true",
+        ),
+        DeclareLaunchArgument(
+            "esp_port", default_value="",
+            description="serial port for the ESP32 (empty = auto-detect)",
+        ),
+        DeclareLaunchArgument(
+            "esp_params_file",
+            default_value=os.path.join(pkg_isaac, "config", "esp_bridge.yaml"),
+            description="YAML with joint_names/set_target_topic/offset_deg/sign calibration",
+        ),
+        DeclareLaunchArgument(
+            "esp_bridge_delay", default_value="25.0",
+            description="seconds to let the commander come up before starting the ESP bridge",
+        ),
     ]
 
     commander = Node(
@@ -289,6 +308,17 @@ def generate_launch_description() -> LaunchDescription:
         ],
     )
 
+    esp_bridge = Node(
+        package=PKG,
+        executable="esp_joint_bridge",
+        name="esp_joint_bridge",
+        output="screen",
+        parameters=[
+            LaunchConfiguration("esp_params_file"),
+            {"port": LaunchConfiguration("esp_port")},
+        ],
+    )
+
     return LaunchDescription(
         declared
         + [
@@ -297,6 +327,11 @@ def generate_launch_description() -> LaunchDescription:
                 period=LaunchConfiguration("commander_delay"),
                 actions=[commander],
                 condition=IfCondition(LaunchConfiguration("start_commander")),
+            ),
+            TimerAction(
+                period=LaunchConfiguration("esp_bridge_delay"),
+                actions=[esp_bridge],
+                condition=IfCondition(LaunchConfiguration("start_esp_bridge")),
             ),
         ]
     )

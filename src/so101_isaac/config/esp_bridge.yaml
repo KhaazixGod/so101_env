@@ -1,0 +1,39 @@
+# esp_joint_bridge: reads the ESP32-S3 (PCA9548A + 6x AS5600) serial log,
+# converts raw -> physical degrees via the JOINTS table in
+# esp_joint_bridge.py (kept in sync with /home/cuong-phan/test/main.py), then
+# re-centres on home_deg and feeds joint_commander's ~/set_target.
+esp_joint_bridge:
+  ros__parameters:
+    port: ""   # empty = auto-detect (ESP32-S3 native USB, else common USB-UART bridges)
+    baud: 115200
+
+    joint_names:
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_5
+      - gripper_joint
+
+    set_target_topic: /joint_commander/set_target
+
+    # home_deg[ch]: the physical degree reading (after raw_to_angle, not raw
+    # counts) that should map to 0 rad -- the SO-101's own default home
+    # pose (joint_commander.yaml's `home: [0,0,0,0,0,0]`) -- on the sim side.
+    #
+    # Captured 2026-10-08 with the real arm sitting still (assumed to be at
+    # the SO-101 default home pose) on /dev/ttyACM1:
+    #   ch0 (joint_1):      90.000 deg
+    #   ch1 (joint_2):       4.219 deg
+    #   ch2 (joint_3):     173.320 deg
+    #   ch3 (joint_4):     100.283 deg
+    #   ch4 (joint_5):     179.473 deg
+    #   ch5 (gripper_joint): 0.000 deg
+    # If the real arm's home turns out not to match the sim's, re-run
+    # `ros2 run so101_isaac esp_joint_bridge` with the arm at the pose you
+    # actually want to be "home" and copy the logged degrees here.
+    home_deg: [90.000, 4.219, 173.320, 100.283, 179.473, 0.000]
+
+    # +1.0 or -1.0 per channel: flip if that joint moves opposite the
+    # URDF's positive direction once mapped into the sim.
+    direction: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
