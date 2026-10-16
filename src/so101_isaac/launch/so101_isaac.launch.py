@@ -33,10 +33,13 @@ def _launch_isaac(context, *_args, **_kwargs):
         "state_topic", "command_topic",
         "stiffness", "damping", "max_force", "drive_config", "joint_drive",
         "conveyor", "conveyor_engine", "conveyor_width", "conveyor_length", "conveyor_thickness",
-        "conveyor_gap", "conveyor_offset", "conveyor_yaw", "conveyor_speed",
+        "conveyor_gap", "conveyor_offset", "conveyor_height_offset", "conveyor_yaw", "conveyor_speed",
         "conveyor_demo_boxes", "conveyor_demo_box_size", "conveyor_demo_box_mass", "conveyor_friction",
         "conveyor_test_cube", "conveyor_test_cube_size", "conveyor_test_cube_mass",
         "conveyor_test_cube_drop_height", "conveyor_test_cube_x", "conveyor_test_cube_y",
+        "base_fixed_joint",
+        "pickup_cube", "pickup_cube_size", "pickup_cube_mass", "pickup_cube_x", "pickup_cube_y",
+        "pickup_cube_distance",
         "physics_hz", "publish_tf", "publish_clock", "save_usd",
     )}
 
@@ -80,6 +83,7 @@ def _launch_isaac(context, *_args, **_kwargs):
             "--conveyor-thickness", cfg["conveyor_thickness"],
             "--conveyor-gap", cfg["conveyor_gap"],
             "--conveyor-offset", cfg["conveyor_offset"],
+            "--conveyor-height-offset", cfg["conveyor_height_offset"],
             "--conveyor-yaw", cfg["conveyor_yaw"],
             "--conveyor-speed", cfg["conveyor_speed"],
             # warp engine only -- harmless to always pass, the scene script ignores
@@ -104,6 +108,23 @@ def _launch_isaac(context, *_args, **_kwargs):
                     cfg["conveyor_test_cube_x"] or "0.0",
                     cfg["conveyor_test_cube_y"] or "0.0",
                 ]
+
+    if not _bool(cfg["base_fixed_joint"]):
+        cmd.append("--no-base-fixed-joint")
+
+    if not _bool(cfg["pickup_cube"]):
+        cmd.append("--no-pickup-cube")
+    else:
+        cmd += [
+            "--pickup-cube-size", cfg["pickup_cube_size"],
+            "--pickup-cube-mass", cfg["pickup_cube_mass"],
+            "--pickup-cube-distance", cfg["pickup_cube_distance"],
+        ]
+        # Leave both pickup_cube_x/y empty (the default) to place it
+        # --pickup-cube-distance in front of the robot -- same both-or-neither
+        # rule as robot_xy.
+        if cfg["pickup_cube_x"] or cfg["pickup_cube_y"]:
+            cmd += ["--pickup-cube-xy", cfg["pickup_cube_x"] or "0.0", cfg["pickup_cube_y"] or "0.0"]
 
     # Drive gains: leave --stiffness/--damping/--max-force/--drive-config unset
     # (empty launch args) to let the scene script's own defaults -- and
@@ -210,12 +231,17 @@ def generate_launch_description() -> LaunchDescription:
         DeclareLaunchArgument("conveyor_length", default_value="1.00", description="belt length, m"),
         DeclareLaunchArgument("conveyor_thickness", default_value="0.04"),
         DeclareLaunchArgument(
-            "conveyor_gap", default_value="0.0",
+            "conveyor_gap", default_value="0.08",
             description="gap between the table edge and the belt's near end, m (0 = touching)",
         ),
         DeclareLaunchArgument(
             "conveyor_offset", default_value="0.0",
             description="shift the belt sideways along the edge, relative to the table centre, m",
+        ),
+        DeclareLaunchArgument(
+            "conveyor_height_offset", default_value="0.17",
+            description="raise (positive) or lower (negative) the belt's top surface relative to "
+                        "the table top, m",
         ),
         DeclareLaunchArgument(
             "conveyor_yaw", default_value="90.0",
@@ -224,7 +250,7 @@ def generate_launch_description() -> LaunchDescription:
                         "belt alongside the edge instead",
         ),
         DeclareLaunchArgument(
-            "conveyor_speed", default_value="0.2",
+            "conveyor_speed", default_value="0.0",
             description="belt surface speed, m/s, along its direction of travel "
                         "(conveyor_yaw away from table_edge's toward-the-table direction)",
         ),
@@ -255,6 +281,26 @@ def generate_launch_description() -> LaunchDescription:
                         "conveyor_test_cube_x AND _y empty to drop it at the belt's own centre",
         ),
         DeclareLaunchArgument("conveyor_test_cube_y", default_value=""),
+        DeclareLaunchArgument(
+            "base_fixed_joint", default_value="true",
+            description="add a PhysicsFixedJoint locking base_link's pose to the table top",
+        ),
+        DeclareLaunchArgument(
+            "pickup_cube", default_value="true",
+            description="add a small dynamic cube on the table within the arm's reach, to test the gripper",
+        ),
+        DeclareLaunchArgument("pickup_cube_size", default_value="0.03", description="edge length, m"),
+        DeclareLaunchArgument("pickup_cube_mass", default_value="0.02", description="kg"),
+        DeclareLaunchArgument(
+            "pickup_cube_x", default_value="",
+            description="where to place the cube, relative to the table centre; leave "
+                        "pickup_cube_x AND _y empty to place it pickup_cube_distance in front of the robot",
+        ),
+        DeclareLaunchArgument("pickup_cube_y", default_value=""),
+        DeclareLaunchArgument(
+            "pickup_cube_distance", default_value="0.18",
+            description="default pickup_cube_xy: this far in front of the robot, toward the table centre, m",
+        ),
         DeclareLaunchArgument("physics_hz", default_value="120.0"),
         DeclareLaunchArgument("publish_tf", default_value="true"),
         DeclareLaunchArgument("publish_clock", default_value="true"),
@@ -289,8 +335,10 @@ def generate_launch_description() -> LaunchDescription:
             description="YAML with joint_names/set_target_topic/offset_deg/sign calibration",
         ),
         DeclareLaunchArgument(
-            "esp_bridge_delay", default_value="25.0",
-            description="seconds to let the commander come up before starting the ESP bridge",
+            "esp_bridge_delay", default_value="30.0",
+            description="seconds (from launch start) before starting the ESP bridge -- default is "
+                        "commander_delay plus a ~10s hold at the arm's imported URDF home pose, so "
+                        "the arm visibly settles at home before the ESP32 takes over driving it",
         ),
     ]
 

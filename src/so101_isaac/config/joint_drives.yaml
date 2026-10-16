@@ -14,10 +14,21 @@
 # --max-force -- that is the point of naming it here. Leave `joints:` empty
 # (as below) to let the CLI flags control every joint uniformly; add an entry
 # only for a joint you want pinned regardless of what a global flag passes.
-
+#
+# 2026-10-13: default stiffness/damping replaced with the real STS3215 servo
+# values (datrich/SO_101_SML's isaac/import_so101.py, sourced from
+# TheRobotStudio/SO-ARM100's so101_new_calib.xml), converted from their
+# per-radian units to this file's per-degree convention:
+#   kp = 998.22 N*m/rad -> 998.22 * pi/180 = 17.422226 N*m/deg
+#   kv = 2.731   N*m*s/rad -> 2.731   * pi/180 = 0.047665 N*m*s/deg
+# The old 10000/100 were arbitrary placeholders -- ~575x stiffer than the
+# real servo, which is almost certainly why the gripper pushed straight
+# through a grasped object instead of stopping against it (see also
+# so101_table_scene.py's configure_physx_joint_axis() for the matching
+# armature/friction/max-velocity added alongside this).
 default:
-  stiffness: 10000.0
-  damping: 100.0
+  stiffness: 17.422226
+  damping: 0.047665
   max_force: null
 
 joints: {}

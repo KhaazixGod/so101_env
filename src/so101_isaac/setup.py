@@ -38,6 +38,11 @@ setup(
         "console_scripts": [
             "joint_commander = so101_isaac.joint_commander:main",
             "esp_joint_bridge = so101_isaac.esp_joint_bridge:main",
+            "encoder_panel = so101_isaac.encoder_panel:main",
+            "apriltag_distance_monitor = so101_isaac.apriltag_distance_monitor:main",
+            "apriltag_overlay_view = so101_isaac.apriltag_overlay_view:main",
+            "apriltag_custom_detector = so101_isaac.apriltag_custom_detector:main",
+            "camera_viewer = so101_isaac.camera_viewer:main",
         ],
     },
 )

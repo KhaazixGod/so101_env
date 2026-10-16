@@ -33,14 +33,23 @@ from std_srvs.srv import Trigger
 
 DEFAULT_JOINTS = ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "gripper_joint"]
 
-# Limits from so101.urdf.xacro, radians. Used to clamp whatever is commanded.
+# Limits from so101_description/urdf/so101.urdf's <limit> tags, radians.
+# Used to clamp whatever is commanded. Keep in sync by hand if that file's
+# limits change -- this isn't parsed from it automatically.
+#
+# 2026-10-12: so101.urdf was swapped for the SML lab's rebuilt model
+# (datrich/SO_101_SML), renaming shoulder_pan/shoulder_lift/elbow_flex/
+# wrist_flex/wrist_roll/gripper to joint_1../gripper_joint in that same
+# order. Limits below are that model's, not the previous one's -- joint_1-4
+# are now a symmetric +/-90 deg each, joint_5 is -360..0 deg (not 0-centered,
+# a bounded single turn, not continuous), gripper is 0..90 deg.
 DEFAULT_LIMITS = {
-    "joint_1": (-3.14159, 0.90101),
-    "joint_2": (-1.20475, 1.93684),
-    "joint_3": (-1.55826, 1.23427),
-    "joint_4": (-0.210268, 2.58226),
-    "joint_5": (-0.79539, 0.78539),
-    "gripper_joint": (-0.451427, 0.59577),
+    "joint_1": (-1.5708, 1.5708),
+    "joint_2": (-1.5708, 1.5708),
+    "joint_3": (-1.5708, 1.5708),
+    "joint_4": (-1.5708, 1.5708),
+    "joint_5": (-6.28319, 0.0),
+    "gripper_joint": (0.0, 1.5708),
 }
 
 

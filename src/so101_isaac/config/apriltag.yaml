@@ -1,0 +1,42 @@
+# apriltag_ros's AprilTagNode parameters. Based on
+# /opt/ros/jazzy/share/apriltag_ros/cfg/tags_36h11.yaml (apriltag_ros's own
+# stock example), just with `size` set to this project's tags.
+#
+# `size` is the tag's black square edge length, metres -- NOT the white
+# border. Get this wrong and every reported tag pose is wrong by the same
+# proportion (a tag that reads 2x too big makes apriltag_ros think it's half
+# as far away). Measure the actual printed/mounted tag if in doubt.
+/**:
+    ros__parameters:
+        image_transport: raw
+        family: 36h11
+        size: 0.04            # m -- 2026-10-16: doubled from 2cm to 4cm to improve detection
+        max_hamming: 0
+        qos_profile: default
+
+        detector:
+            # 2026-10-14: was 1 -- this machine has 20 cores and apriltag's
+            # detector parallelises its quad-detection pipeline across
+            # threads, so this is pure speed with no quality/resolution
+            # trade-off (unlike decimate below).
+            threads: 8
+            # 2026-10-14: was 2.0 -- halves the detector's working resolution,
+            # which was already marginal for a 2cm tag (only ~2-3 px per
+            # module at 640x480). 1.0 processes the full rectified frame;
+            # costlier per frame but this is the single biggest lever for
+            # small-tag detection quality.
+            decimate: 1.0
+            blur: 0.0
+            refine: True
+            sharpening: 0.25
+            debug: False
+
+        pose_estimation_method: "pnp"
+
+        # Per-tag overrides (optional) -- uncomment and fill in to name
+        # specific tag IDs as frames (e.g. a tag stuck to the pickup cube) or
+        # give one a different physical size than the `size` default above.
+        # tag:
+        #   ids: [0, 1]
+        #   frames: [pickup_cube, table_origin]
+        #   sizes: [0.05, 0.05]

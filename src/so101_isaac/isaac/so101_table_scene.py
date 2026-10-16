@@ -39,8 +39,10 @@ import yaml
 JOINT_NAMES = ["joint_1", "joint_2", "joint_3", "joint_4", "joint_5", "gripper_joint"]
 
 # Prim paths, relative to where we reference the robot onto the stage.
+# urdf_usd_converter v0.1.2 nests base_link directly under Geometry (no
+# "world" Xform wrapper) -- see convert_urdf_to_usd.sh.
 ROBOT_PRIM = "/World/so101"
-ARTICULATION_ROOT = f"{ROBOT_PRIM}/Geometry/world/base_link"
+ARTICULATION_ROOT = f"{ROBOT_PRIM}/Geometry/base_link"
 JOINTS_SCOPE = f"{ROBOT_PRIM}/Physics"
 
 DEFAULT_USD = os.path.normpath(
@@ -95,6 +97,25 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     p.add_argument("--robot-yaw", type=float, default=0.0, help="robot heading on the table, degrees")
     p.add_argument("--no-auto-place", action="store_true",
                    help="do not snap the robot down onto the table using its bounding box")
+    p.add_argument("--base-fixed-joint", action=argparse.BooleanOptionalAction, default=True,
+                   help="add a PhysicsFixedJoint locking base_link's current pose to the table top "
+                        "(default: on) -- base_link is already static (the articulation root's own "
+                        "anchor plus this script's own placement transform keep it from moving), so "
+                        "this is a belt-and-suspenders anchor, not something the sim needs to hold "
+                        "still today; it matters if the table ever becomes a dynamic body")
+
+    # --- pickup test cube ----------------------------------------------------
+    p.add_argument("--pickup-cube", action=argparse.BooleanOptionalAction, default=True,
+                   help="add a small dynamic cube on the table within the arm's reach, to test the "
+                        "gripper (default: on)")
+    p.add_argument("--pickup-cube-size", type=float, default=0.03, help="edge length, m")
+    p.add_argument("--pickup-cube-mass", type=float, default=0.02, help="kg")
+    p.add_argument("--pickup-cube-xy", type=float, nargs=2, default=None, metavar=("X", "Y"),
+                   help="where to place the cube, relative to the table centre (same convention as "
+                        "--robot-xy); default: --pickup-cube-distance in front of the robot")
+    p.add_argument("--pickup-cube-distance", type=float, default=0.18,
+                   help="default --pickup-cube-xy: this far in front of the robot's own position, "
+                        "toward the table centre, m")
 
     # --- drives ------------------------------------------------------------
     # Precedence, low to high:
@@ -137,6 +158,9 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
                    help="gap between the table edge and the belt's near side, m (0 = touching/sat canh)")
     p.add_argument("--conveyor-offset", type=float, default=0.0,
                    help="shift the belt sideways along the edge, relative to the table centre, m")
+    p.add_argument("--conveyor-height-offset", type=float, default=0.0,
+                   help="raise (positive) or lower (negative) the belt's top surface relative to "
+                        "the table top, m (default: flush with the table)")
     p.add_argument("--conveyor-yaw", type=float, default=90.0,
                    help="extra rotation on top of --table-edge's own orientation, degrees. "
                         "0 = belt feeds straight toward/away from the table (its old default); "
@@ -591,7 +615,7 @@ def _compute_belt_geometry(args: argparse.Namespace) -> dict:
     near = edge_coord + sign * args.conveyor_gap  # the belt's near side, at/off the table edge
     belt_center_along_edge_axis = near + sign * proj_half
 
-    top_z = args.table_height  # flush with the table top
+    top_z = args.table_height + args.conveyor_height_offset
     thickness = args.conveyor_thickness
 
     center = [0.0, 0.0, top_z - thickness / 2.0]
@@ -867,6 +891,59 @@ def build_conveyor_test_cube(stage: Usd.Stage, args: argparse.Namespace, physics
     )
 
 
+def add_fixed_joint(stage: Usd.Stage, path: str, body0_path: str, body1_path: str) -> UsdPhysics.FixedJoint:
+    """Lock body1's current world pose relative to body0, moving neither.
+
+    Both prims must already be at their final world transform (call after
+    place_robot(), not before) -- the joint's local offsets are computed
+    from that pose, so authoring it never snaps/teleports anything.
+    """
+    xf0 = UsdGeom.Xformable(stage.GetPrimAtPath(body0_path)).ComputeLocalToWorldTransform(Usd.TimeCode.Default())
+    xf1 = UsdGeom.Xformable(stage.GetPrimAtPath(body1_path)).ComputeLocalToWorldTransform(Usd.TimeCode.Default())
+    rel = xf1 * xf0.GetInverse()  # body1's pose, expressed in body0's local frame
+
+    joint = UsdPhysics.FixedJoint.Define(stage, Sdf.Path(path))
+    joint.CreateBody0Rel().SetTargets([Sdf.Path(body0_path)])
+    joint.CreateBody1Rel().SetTargets([Sdf.Path(body1_path)])
+    joint.CreateLocalPos0Attr().Set(Gf.Vec3f(rel.ExtractTranslation()))
+    joint.CreateLocalRot0Attr().Set(Gf.Quatf(rel.ExtractRotationQuat()))
+    joint.CreateLocalPos1Attr().Set(Gf.Vec3f(0.0, 0.0, 0.0))
+    joint.CreateLocalRot1Attr().Set(Gf.Quatf(1.0, 0.0, 0.0, 0.0))
+    return joint
+
+
+def build_pickup_cube(stage: Usd.Stage, args: argparse.Namespace, physics_material) -> None:
+    """A small dynamic cube resting on the table, within reach, to grasp."""
+    if not args.pickup_cube:
+        return
+
+    if args.pickup_cube_xy is not None:
+        x, y = args.pickup_cube_xy
+    else:
+        robot_x, robot_y = resolve_robot_xy(args)
+        axis, _edge_coord, sign = edge_position(args.table_size, args.table_edge)
+        pos = [robot_x, robot_y]
+        pos[axis] -= sign * args.pickup_cube_distance  # inward, toward the table centre
+        x, y = pos
+
+    size = args.pickup_cube_size
+    z = args.table_height + size / 2.0
+
+    make_box(
+        stage,
+        "/World/PickupCube",
+        size=(size, size, size),
+        center=(x, y, z),
+        color=(0.15, 0.55, 0.85),
+        physics_material=physics_material,
+        mass=args.pickup_cube_mass,
+    )
+    carb.log_info(
+        f"[so101_table_scene] pickup cube: ({x:.3f}, {y:.3f}, {z:.3f}), "
+        f"{size:.3f} m, {args.pickup_cube_mass:.3f} kg"
+    )
+
+
 def build_lighting(stage: Usd.Stage) -> None:
     dome = UsdLux.DomeLight.Define(stage, Sdf.Path("/World/Lights/DomeLight"))
     dome.CreateIntensityAttr(900.0)
@@ -887,7 +964,28 @@ def add_robot(stage: Usd.Stage, usd_path: str) -> Usd.Prim:
     variants = prim.GetVariantSets()
     if variants.HasVariantSet("Physics"):
         variants.GetVariantSet("Physics").SetVariantSelection("physx")
+
+    _disable_self_collision(stage)
     return prim
+
+
+def _disable_self_collision(stage: Usd.Stage) -> None:
+    """Every link in this URDF repeats its whole downstream chain's collision
+    geometry on itself (an artifact of the source URDF/converter, not this
+    script) -- e.g. base_link carries its own copy of link_2's collision
+    shape, sitting exactly on top of link_2's own. With self-collision on,
+    PhysX sees that as a fully interpenetrating contact and the whole
+    articulation explodes to NaN transforms within the first few physics
+    steps. Disable it on both the classic PhysX and Newton articulation
+    schemas -- urdf_usd_converter applies both to the articulation root.
+    """
+    root = stage.GetPrimAtPath(ARTICULATION_ROOT)
+    if not root or not root.IsValid():
+        carb.log_error(f"[so101_table_scene] articulation root missing: {ARTICULATION_ROOT}")
+        return
+    root.CreateAttribute("newton:selfCollisionEnabled", Sdf.ValueTypeNames.Bool).Set(False)
+    if PhysxSchema is not None:
+        PhysxSchema.PhysxArticulationAPI.Apply(root).CreateEnabledSelfCollisionsAttr().Set(False)
 
 
 def place_robot(stage: Usd.Stage, prim: Usd.Prim, args: argparse.Namespace) -> None:
@@ -964,6 +1062,43 @@ def configure_drives(stage: Usd.Stage, args: argparse.Namespace) -> None:
         prim.CreateAttribute("state:angular:physics:velocity", Sdf.ValueTypeNames.Float).Set(0.0)
 
         _mark_actuated_dof(prim)
+        configure_physx_joint_axis(prim)
+
+
+# STS3215 servo physical constants (TheRobotStudio/SO-ARM100's
+# so101_new_calib.xml, via datrich/SO_101_SML's isaac/import_so101.py).
+# UsdPhysics's angular DriveAPI (configure_drives(), above) only carries
+# stiffness/damping/maxForce; PhysX's own per-joint armature, Coulomb
+# friction, viscous friction and velocity limit -- not part of UsdPhysics --
+# need PhysxJointAxisAPI instead, applied here.
+_PHYSX_ARMATURE = 0.028  # kg*m^2
+_PHYSX_FRICTION_EFFORT = 0.052  # N*m, Coulomb (static == dynamic -- no separate breakaway value available)
+_PHYSX_PASSIVE_DAMPING = 0.60  # N*m*s/rad, viscous
+_PHYSX_MAX_VELOCITY_RAD_S = 10.0  # rad/s, so101.urdf's <limit velocity="3"/> is lower -- this is the servo's own rating
+
+
+def configure_physx_joint_axis(prim: Usd.Prim) -> None:
+    """Give a revolute joint its PhysX-only armature/friction/velocity-limit,
+    scaled from the constants above (per-radian, SI) to USD's angular
+    convention (per-degree) the same way configure_drives() does for
+    stiffness/damping -- see the comment there.
+
+    PhysxJointAxisAPI (isaacsim.asset.importer.urdf's own post-import step
+    uses it for exactly this -- the stock URDF importer only ever authors
+    these for the Newton/MuJoCo-targeted output, never PhysX) has no
+    generated Python class as of this Isaac Sim release, so it's applied by
+    schema name, same pattern as _mark_actuated_dof's RobotSchemaJointAPI.
+    """
+    prim.ApplyAPI("PhysxJointAxisAPI", "angular")
+    deg = math.pi / 180.0
+    for attr, value in (
+        ("armature", _PHYSX_ARMATURE),
+        ("staticFrictionEffort", _PHYSX_FRICTION_EFFORT),
+        ("dynamicFrictionEffort", _PHYSX_FRICTION_EFFORT),
+        ("viscousFrictionCoefficient", _PHYSX_PASSIVE_DAMPING * deg),
+        ("maxJointVelocity", _PHYSX_MAX_VELOCITY_RAD_S / deg),
+    ):
+        prim.CreateAttribute(f"physxJointAxis:angular:{attr}", Sdf.ValueTypeNames.Float, custom=False).Set(value)
 
 
 # Index into RobotSchemaJointAPI's isaac:actuator[6], one flag per DOF.
@@ -1122,11 +1257,14 @@ def main() -> None:
             "Isaac Sim installs on this machine) -- use --conveyor-engine physx for a working belt."
         )
     build_conveyor_test_cube(stage, args, grip_material)
+    build_pickup_cube(stage, args, grip_material)
     build_lighting(stage)
 
     robot = add_robot(stage, args.usd)
     simulation_app.update()
     place_robot(stage, robot, args)
+    if args.base_fixed_joint:
+        add_fixed_joint(stage, "/World/Table/BaseLinkJoint", "/World/Table/Top", ARTICULATION_ROOT)
     configure_drives(stage, args)
     simulation_app.update()
 

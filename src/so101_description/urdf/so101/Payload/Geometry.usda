@@ -1,0 +1,1209 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.2"
+    }
+    defaultPrim = "so101"
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "so101"
+{
+    def Scope "Geometry"
+    {
+        def Xform "base_link"
+        {
+            def Mesh "part_30" (
+                prepend references = @./GeometryLibrary.usdc@</Geometry/part_30>
+            )
+            {
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "part_28" (
+                prepend references = @./GeometryLibrary.usdc@</Geometry/part_28>
+            )
+            {
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "base_arm_servo_cap" (
+                prepend references = @./GeometryLibrary.usdc@</Geometry/base_arm_servo_cap>
+            )
+            {
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "part_24" (
+                prepend references = @./GeometryLibrary.usdc@</Geometry/part_24>
+            )
+            {
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "base_arm_servo_case" (
+                prepend references = @./GeometryLibrary.usdc@</Geometry/base_arm_servo_case>
+            )
+            {
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "base_arm" (
+                prepend references = @./GeometryLibrary.usdc@</Geometry/base_arm>
+            )
+            {
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "part_26" (
+                prepend references = @./GeometryLibrary.usdc@</Geometry/part_26>
+            )
+            {
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "part_30_1" (
+                displayName = "part_30"
+                prepend references = @./GeometryLibrary.usdc@</Geometry/part_30>
+                uiHints = {
+                    string displayName = "part_30"
+                }
+            )
+            {
+                uniform token purpose = "guide"
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "part_28_1" (
+                displayName = "part_28"
+                prepend references = @./GeometryLibrary.usdc@</Geometry/part_28>
+                uiHints = {
+                    string displayName = "part_28"
+                }
+            )
+            {
+                uniform token purpose = "guide"
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "base_arm_servo_cap_1" (
+                displayName = "base_arm_servo_cap"
+                prepend references = @./GeometryLibrary.usdc@</Geometry/base_arm_servo_cap>
+                uiHints = {
+                    string displayName = "base_arm_servo_cap"
+                }
+            )
+            {
+                uniform token purpose = "guide"
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "part_24_1" (
+                displayName = "part_24"
+                prepend references = @./GeometryLibrary.usdc@</Geometry/part_24>
+                uiHints = {
+                    string displayName = "part_24"
+                }
+            )
+            {
+                uniform token purpose = "guide"
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "base_arm_servo_case_1" (
+                displayName = "base_arm_servo_case"
+                prepend references = @./GeometryLibrary.usdc@</Geometry/base_arm_servo_case>
+                uiHints = {
+                    string displayName = "base_arm_servo_case"
+                }
+            )
+            {
+                uniform token purpose = "guide"
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "base_arm_1" (
+                displayName = "base_arm"
+                prepend references = @./GeometryLibrary.usdc@</Geometry/base_arm>
+                uiHints = {
+                    string displayName = "base_arm"
+                }
+            )
+            {
+                uniform token purpose = "guide"
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Mesh "part_26_1" (
+                displayName = "part_26"
+                prepend references = @./GeometryLibrary.usdc@</Geometry/part_26>
+                uiHints = {
+                    string displayName = "part_26"
+                }
+            )
+            {
+                uniform token purpose = "guide"
+                quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.50205, -0.016, -0.068)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Xform "part_31"
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (0, -0.05945, 0.0303)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Mesh "part_35" (
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_35>
+                )
+                {
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Mesh "part_36" (
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_36>
+                )
+                {
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Mesh "part_34" (
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_34>
+                )
+                {
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Mesh "part_33" (
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_33>
+                )
+                {
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Mesh "part_32" (
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_32>
+                )
+                {
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Mesh "part_31" (
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_31>
+                )
+                {
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Mesh "part_35_1" (
+                    displayName = "part_35"
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_35>
+                    uiHints = {
+                        string displayName = "part_35"
+                    }
+                )
+                {
+                    uniform token purpose = "guide"
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Mesh "part_36_1" (
+                    displayName = "part_36"
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_36>
+                    uiHints = {
+                        string displayName = "part_36"
+                    }
+                )
+                {
+                    uniform token purpose = "guide"
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Mesh "part_34_1" (
+                    displayName = "part_34"
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_34>
+                    uiHints = {
+                        string displayName = "part_34"
+                    }
+                )
+                {
+                    uniform token purpose = "guide"
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Mesh "part_33_1" (
+                    displayName = "part_33"
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_33>
+                    uiHints = {
+                        string displayName = "part_33"
+                    }
+                )
+                {
+                    uniform token purpose = "guide"
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Mesh "part_32_1" (
+                    displayName = "part_32"
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_32>
+                    uiHints = {
+                        string displayName = "part_32"
+                    }
+                )
+                {
+                    uniform token purpose = "guide"
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Mesh "part_31_1" (
+                    displayName = "part_31"
+                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_31>
+                    uiHints = {
+                        string displayName = "part_31"
+                    }
+                )
+                {
+                    uniform token purpose = "guide"
+                    quatf xformOp:orient = (0.70710546, 0.7071081, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.50205, 0.04345, -0.0983)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Xform "part_37"
+                {
+                    quatf xformOp:orient = (-0.70710546, 0, 0.7071081, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0.0305, -0.03045, 0.11355)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Mesh "part_37" (
+                        prepend references = @./GeometryLibrary.usdc@</Geometry/part_37>
+                    )
+                    {
+                        quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (-0.21185, 0.0739, 0.53255)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Mesh "part_39" (
+                        prepend references = @./GeometryLibrary.usdc@</Geometry/part_39>
+                    )
+                    {
+                        quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (-0.21185, 0.0739, 0.53255)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Mesh "part_40" (
+                        prepend references = @./GeometryLibrary.usdc@</Geometry/part_40>
+                    )
+                    {
+                        quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (-0.21185, 0.0739, 0.53255)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Mesh "under_arm_so101_v1" (
+                        prepend references = @./GeometryLibrary.usdc@</Geometry/under_arm_so101_v1>
+                    )
+                    {
+                        quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (-0.21185, 0.0739, 0.53255)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Mesh "part_38" (
+                        prepend references = @./GeometryLibrary.usdc@</Geometry/part_38>
+                    )
+                    {
+                        quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (-0.21185, 0.0739, 0.53255)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Mesh "part_37_1" (
+                        displayName = "part_37"
+                        prepend references = @./GeometryLibrary.usdc@</Geometry/part_37>
+                        uiHints = {
+                            string displayName = "part_37"
+                        }
+                    )
+                    {
+                        uniform token purpose = "guide"
+                        quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (-0.21185, 0.0739, 0.53255)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Mesh "part_39_1" (
+                        displayName = "part_39"
+                        prepend references = @./GeometryLibrary.usdc@</Geometry/part_39>
+                        uiHints = {
+                            string displayName = "part_39"
+                        }
+                    )
+                    {
+                        uniform token purpose = "guide"
+                        quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (-0.21185, 0.0739, 0.53255)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Mesh "part_40_1" (
+                        displayName = "part_40"
+                        prepend references = @./GeometryLibrary.usdc@</Geometry/part_40>
+                        uiHints = {
+                            string displayName = "part_40"
+                        }
+                    )
+                    {
+                        uniform token purpose = "guide"
+                        quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (-0.21185, 0.0739, 0.53255)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Mesh "under_arm_so101_v1_1" (
+                        displayName = "under_arm_so101_v1"
+                        prepend references = @./GeometryLibrary.usdc@</Geometry/under_arm_so101_v1>
+                        uiHints = {
+                            string displayName = "under_arm_so101_v1"
+                        }
+                    )
+                    {
+                        uniform token purpose = "guide"
+                        quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (-0.21185, 0.0739, 0.53255)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Mesh "part_38_1" (
+                        displayName = "part_38"
+                        prepend references = @./GeometryLibrary.usdc@</Geometry/part_38>
+                        uiHints = {
+                            string displayName = "part_38"
+                        }
+                    )
+                    {
+                        uniform token purpose = "guide"
+                        quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (-0.21185, 0.0739, 0.53255)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Xform "part_42"
+                    {
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0.12647, -0.02745, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                        def Mesh "under_arm_so101_v1__2" (
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/under_arm_so101_v1__2>
+                        )
+                        {
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Mesh "part_42" (
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/part_42>
+                        )
+                        {
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Mesh "part_44" (
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/part_44>
+                        )
+                        {
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Mesh "part_46" (
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/part_46>
+                        )
+                        {
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Mesh "part_45" (
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/part_45>
+                        )
+                        {
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Mesh "part_43" (
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/part_43>
+                        )
+                        {
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Mesh "under_arm_so101_v1__2_1" (
+                            displayName = "under_arm_so101_v1__2"
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/under_arm_so101_v1__2>
+                            uiHints = {
+                                string displayName = "under_arm_so101_v1__2"
+                            }
+                        )
+                        {
+                            uniform token purpose = "guide"
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Mesh "part_42_1" (
+                            displayName = "part_42"
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/part_42>
+                            uiHints = {
+                                string displayName = "part_42"
+                            }
+                        )
+                        {
+                            uniform token purpose = "guide"
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Mesh "part_44_1" (
+                            displayName = "part_44"
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/part_44>
+                            uiHints = {
+                                string displayName = "part_44"
+                            }
+                        )
+                        {
+                            uniform token purpose = "guide"
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Mesh "part_46_1" (
+                            displayName = "part_46"
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/part_46>
+                            uiHints = {
+                                string displayName = "part_46"
+                            }
+                        )
+                        {
+                            uniform token purpose = "guide"
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Mesh "part_45_1" (
+                            displayName = "part_45"
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/part_45>
+                            uiHints = {
+                                string displayName = "part_45"
+                            }
+                        )
+                        {
+                            uniform token purpose = "guide"
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Mesh "part_43_1" (
+                            displayName = "part_43"
+                            prepend references = @./GeometryLibrary.usdc@</Geometry/part_43>
+                            uiHints = {
+                                string displayName = "part_43"
+                            }
+                        )
+                        {
+                            uniform token purpose = "guide"
+                            quatf xformOp:orient = (-0.49999815, -0.5, -0.5, 0.50000185)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.33832, 0.10135, 0.53255)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                        }
+
+                        def Xform "part_63"
+                        {
+                            quatf xformOp:orient = (1, 0, 0, 0)
+                            float3 xformOp:scale = (1, 1, 1)
+                            double3 xformOp:translate = (-0.0025, -0.13015, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                            def Mesh "part_63" (
+                                prepend references = @./GeometryLibrary.usdc@</Geometry/part_63>
+                            )
+                            {
+                                quatf xformOp:orient = (0.70710546, 0, 0.7071081, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-0.2315, -0.33582, 0.53255)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Mesh "part_66" (
+                                prepend references = @./GeometryLibrary.usdc@</Geometry/part_66>
+                            )
+                            {
+                                quatf xformOp:orient = (0.70710546, 0, 0.7071081, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-0.2315, -0.33582, 0.53255)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Mesh "part_65" (
+                                prepend references = @./GeometryLibrary.usdc@</Geometry/part_65>
+                            )
+                            {
+                                quatf xformOp:orient = (0.70710546, 0, 0.7071081, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-0.2315, -0.33582, 0.53255)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Mesh "part_64" (
+                                prepend references = @./GeometryLibrary.usdc@</Geometry/part_64>
+                            )
+                            {
+                                quatf xformOp:orient = (0.70710546, 0, 0.7071081, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-0.2315, -0.33582, 0.53255)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Mesh "part_69" (
+                                prepend references = @./GeometryLibrary.usdc@</Geometry/part_69>
+                            )
+                            {
+                                quatf xformOp:orient = (0.70710546, 0, 0.7071081, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-0.2315, -0.33582, 0.53255)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Mesh "part_63_1" (
+                                displayName = "part_63"
+                                prepend references = @./GeometryLibrary.usdc@</Geometry/part_63>
+                                uiHints = {
+                                    string displayName = "part_63"
+                                }
+                            )
+                            {
+                                uniform token purpose = "guide"
+                                quatf xformOp:orient = (0.70710546, 0, 0.7071081, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-0.2315, -0.33582, 0.53255)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Mesh "part_66_1" (
+                                displayName = "part_66"
+                                prepend references = @./GeometryLibrary.usdc@</Geometry/part_66>
+                                uiHints = {
+                                    string displayName = "part_66"
+                                }
+                            )
+                            {
+                                uniform token purpose = "guide"
+                                quatf xformOp:orient = (0.70710546, 0, 0.7071081, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-0.2315, -0.33582, 0.53255)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Mesh "part_65_1" (
+                                displayName = "part_65"
+                                prepend references = @./GeometryLibrary.usdc@</Geometry/part_65>
+                                uiHints = {
+                                    string displayName = "part_65"
+                                }
+                            )
+                            {
+                                uniform token purpose = "guide"
+                                quatf xformOp:orient = (0.70710546, 0, 0.7071081, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-0.2315, -0.33582, 0.53255)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Mesh "part_64_1" (
+                                displayName = "part_64"
+                                prepend references = @./GeometryLibrary.usdc@</Geometry/part_64>
+                                uiHints = {
+                                    string displayName = "part_64"
+                                }
+                            )
+                            {
+                                uniform token purpose = "guide"
+                                quatf xformOp:orient = (0.70710546, 0, 0.7071081, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-0.2315, -0.33582, 0.53255)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Mesh "part_69_1" (
+                                displayName = "part_69"
+                                prepend references = @./GeometryLibrary.usdc@</Geometry/part_69>
+                                uiHints = {
+                                    string displayName = "part_69"
+                                }
+                            )
+                            {
+                                uniform token purpose = "guide"
+                                quatf xformOp:orient = (0.70710546, 0, 0.7071081, 0)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-0.2315, -0.33582, 0.53255)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                            }
+
+                            def Xform "part_56"
+                            {
+                                quatf xformOp:orient = (0.49999815, -0.5, 0.5, 0.50000185)
+                                float3 xformOp:scale = (1, 1, 1)
+                                double3 xformOp:translate = (-0.00000135393, -0.0749445, 0.0304)
+                                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                def Mesh "part_71" (
+                                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_71>
+                                )
+                                {
+                                    quatf xformOp:orient = (0.70710546, 0.7071081, -3.5355405e-13, -3.5355274e-13)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-0.50215, 0.231498, -0.260876)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Mesh "part_61" (
+                                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_61>
+                                )
+                                {
+                                    quatf xformOp:orient = (0.70710546, 0.7071081, -3.5355405e-13, -3.5355274e-13)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-0.50215, 0.231498, -0.260876)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Mesh "part_57" (
+                                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_57>
+                                )
+                                {
+                                    quatf xformOp:orient = (0.70710546, 0.7071081, -3.5355405e-13, -3.5355274e-13)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-0.50215, 0.231498, -0.260876)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Mesh "part_62" (
+                                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_62>
+                                )
+                                {
+                                    quatf xformOp:orient = (0.70710546, 0.7071081, -3.5355405e-13, -3.5355274e-13)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-0.50215, 0.231498, -0.260876)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Mesh "part_56" (
+                                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_56>
+                                )
+                                {
+                                    quatf xformOp:orient = (0.70710546, 0.7071081, -3.5355405e-13, -3.5355274e-13)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-0.50215, 0.231498, -0.260876)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Mesh "part_71_1" (
+                                    displayName = "part_71"
+                                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_71>
+                                    uiHints = {
+                                        string displayName = "part_71"
+                                    }
+                                )
+                                {
+                                    uniform token purpose = "guide"
+                                    quatf xformOp:orient = (0.70710546, 0.7071081, -3.5355405e-13, -3.5355274e-13)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-0.50215, 0.231498, -0.260876)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Mesh "part_61_1" (
+                                    displayName = "part_61"
+                                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_61>
+                                    uiHints = {
+                                        string displayName = "part_61"
+                                    }
+                                )
+                                {
+                                    uniform token purpose = "guide"
+                                    quatf xformOp:orient = (0.70710546, 0.7071081, -3.5355405e-13, -3.5355274e-13)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-0.50215, 0.231498, -0.260876)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Mesh "part_57_1" (
+                                    displayName = "part_57"
+                                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_57>
+                                    uiHints = {
+                                        string displayName = "part_57"
+                                    }
+                                )
+                                {
+                                    uniform token purpose = "guide"
+                                    quatf xformOp:orient = (0.70710546, 0.7071081, -3.5355405e-13, -3.5355274e-13)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-0.50215, 0.231498, -0.260876)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Mesh "part_62_1" (
+                                    displayName = "part_62"
+                                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_62>
+                                    uiHints = {
+                                        string displayName = "part_62"
+                                    }
+                                )
+                                {
+                                    uniform token purpose = "guide"
+                                    quatf xformOp:orient = (0.70710546, 0.7071081, -3.5355405e-13, -3.5355274e-13)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-0.50215, 0.231498, -0.260876)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Mesh "part_56_1" (
+                                    displayName = "part_56"
+                                    prepend references = @./GeometryLibrary.usdc@</Geometry/part_56>
+                                    uiHints = {
+                                        string displayName = "part_56"
+                                    }
+                                )
+                                {
+                                    uniform token purpose = "guide"
+                                    quatf xformOp:orient = (0.70710546, 0.7071081, -3.5355405e-13, -3.5355274e-13)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-0.50215, 0.231498, -0.260876)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                }
+
+                                def Xform "gripper_frame_link"
+                                {
+                                    quatf xformOp:orient = (-0.70710546, 0.7071081, -3.5355405e-13, 3.5355274e-13)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-9.3491e-8, 0, -0.114718)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                    def Scope "origin"
+                                    {
+                                        custom string urdf:rpy = "0 -0 0"
+                                        custom string urdf:xyz = "0 0 0"
+                                    }
+                                }
+
+                                def Xform "moving_jaw_so101_v1"
+                                {
+                                    quatf xformOp:orient = (9.38184e-7, 0.70710546, -9.381874e-7, 0.7071081)
+                                    float3 xformOp:scale = (1, 1, 1)
+                                    double3 xformOp:translate = (-0.0298825, 0.01215, -0.029)
+                                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                    def Mesh "moving_jaw_so101_v1" (
+                                        prepend references = @./GeometryLibrary.usdc@</Geometry/moving_jaw_so101_v1>
+                                    )
+                                    {
+                                        quatf xformOp:orient = (-0.224539, 0.6705089, 0.22454323, 0.67050755)
+                                        float3 xformOp:scale = (1, 1, 1)
+                                        double3 xformOp:translate = (-0.314753, 0.0530135, -0.472268)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+
+                                    def Mesh "moving_jaw_so101_v1_1" (
+                                        displayName = "moving_jaw_so101_v1"
+                                        prepend references = @./GeometryLibrary.usdc@</Geometry/moving_jaw_so101_v1>
+                                        uiHints = {
+                                            string displayName = "moving_jaw_so101_v1"
+                                        }
+                                    )
+                                    {
+                                        uniform token purpose = "guide"
+                                        quatf xformOp:orient = (-0.224539, 0.6705089, 0.22454323, 0.67050755)
+                                        float3 xformOp:scale = (1, 1, 1)
+                                        double3 xformOp:translate = (-0.314753, 0.0530135, -0.472268)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                                    }
+
+                                    def Xform "jaw_tip"
+                                    {
+                                        quatf xformOp:orient = (-0.5, 0.5, 0.50000316, 0.49999684)
+                                        float3 xformOp:scale = (1, 1, 1)
+                                        double3 xformOp:translate = (-0.0857177, 0.0121501, 0.0298826)
+                                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                                        def Scope "origin"
+                                        {
+                                            custom string urdf:rpy = "0 -0 0"
+                                            custom string urdf:xyz = "0 0 0"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        def Scope "custom"
+        {
+            def Scope "transmission"
+            {
+                custom string urdf:name = "shoulder_pan_trans"
+
+                def Scope "type"
+                {
+                    custom string urdf:text = "transmission_interface/SimpleTransmission"
+                }
+
+                def Scope "joint"
+                {
+                    custom string urdf:name = "joint_1"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+                }
+
+                def Scope "actuator"
+                {
+                    custom string urdf:name = "motor1"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+
+                    def Scope "mechanicalReduction"
+                    {
+                        custom string urdf:text = "1"
+                    }
+                }
+            }
+
+            def Scope "transmission_1" (
+                displayName = "transmission"
+                uiHints = {
+                    string displayName = "transmission"
+                }
+            )
+            {
+                custom string urdf:name = "shoulder_lift_trans"
+
+                def Scope "type"
+                {
+                    custom string urdf:text = "transmission_interface/SimpleTransmission"
+                }
+
+                def Scope "joint"
+                {
+                    custom string urdf:name = "joint_2"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+                }
+
+                def Scope "actuator"
+                {
+                    custom string urdf:name = "motor2"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+
+                    def Scope "mechanicalReduction"
+                    {
+                        custom string urdf:text = "1"
+                    }
+                }
+            }
+
+            def Scope "transmission_2" (
+                displayName = "transmission"
+                uiHints = {
+                    string displayName = "transmission"
+                }
+            )
+            {
+                custom string urdf:name = "elbow_flex_trans"
+
+                def Scope "type"
+                {
+                    custom string urdf:text = "transmission_interface/SimpleTransmission"
+                }
+
+                def Scope "joint"
+                {
+                    custom string urdf:name = "joint_3"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+                }
+
+                def Scope "actuator"
+                {
+                    custom string urdf:name = "motor3"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+
+                    def Scope "mechanicalReduction"
+                    {
+                        custom string urdf:text = "1"
+                    }
+                }
+            }
+
+            def Scope "transmission_3" (
+                displayName = "transmission"
+                uiHints = {
+                    string displayName = "transmission"
+                }
+            )
+            {
+                custom string urdf:name = "wrist_flex_trans"
+
+                def Scope "type"
+                {
+                    custom string urdf:text = "transmission_interface/SimpleTransmission"
+                }
+
+                def Scope "joint"
+                {
+                    custom string urdf:name = "joint_4"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+                }
+
+                def Scope "actuator"
+                {
+                    custom string urdf:name = "motor4"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+
+                    def Scope "mechanicalReduction"
+                    {
+                        custom string urdf:text = "1"
+                    }
+                }
+            }
+
+            def Scope "transmission_4" (
+                displayName = "transmission"
+                uiHints = {
+                    string displayName = "transmission"
+                }
+            )
+            {
+                custom string urdf:name = "wrist_roll_trans"
+
+                def Scope "type"
+                {
+                    custom string urdf:text = "transmission_interface/SimpleTransmission"
+                }
+
+                def Scope "joint"
+                {
+                    custom string urdf:name = "joint_5"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+                }
+
+                def Scope "actuator"
+                {
+                    custom string urdf:name = "motor5"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+
+                    def Scope "mechanicalReduction"
+                    {
+                        custom string urdf:text = "1"
+                    }
+                }
+            }
+
+            def Scope "transmission_5" (
+                displayName = "transmission"
+                uiHints = {
+                    string displayName = "transmission"
+                }
+            )
+            {
+                custom string urdf:name = "gripper_trans"
+
+                def Scope "type"
+                {
+                    custom string urdf:text = "transmission_interface/SimpleTransmission"
+                }
+
+                def Scope "joint"
+                {
+                    custom string urdf:name = "gripper_joint"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+                }
+
+                def Scope "actuator"
+                {
+                    custom string urdf:name = "motor6"
+
+                    def Scope "hardwareInterface"
+                    {
+                        custom string urdf:text = "hardware_interface/PositionJointInterface"
+                    }
+
+                    def Scope "mechanicalReduction"
+                    {
+                        custom string urdf:text = "1"
+                    }
+                }
+            }
+        }
+    }
+}
+

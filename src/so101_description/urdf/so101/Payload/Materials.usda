@@ -1,0 +1,496 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.2"
+    }
+    defaultPrim = "so101"
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "so101"
+{
+    def Scope "Materials"
+    {
+        def Material "part_30_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_30_material>
+        )
+        {
+        }
+
+        def Material "part_28_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_28_material>
+        )
+        {
+        }
+
+        def Material "base_arm_servo_cap_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/base_arm_servo_cap_material>
+        )
+        {
+        }
+
+        def Material "part_24_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_24_material>
+        )
+        {
+        }
+
+        def Material "base_arm_servo_case_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/base_arm_servo_case_material>
+        )
+        {
+        }
+
+        def Material "base_arm_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/base_arm_material>
+        )
+        {
+        }
+
+        def Material "part_26_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_26_material>
+        )
+        {
+        }
+
+        def Material "part_35_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_35_material>
+        )
+        {
+        }
+
+        def Material "part_36_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_36_material>
+        )
+        {
+        }
+
+        def Material "part_34_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_34_material>
+        )
+        {
+        }
+
+        def Material "part_33_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_33_material>
+        )
+        {
+        }
+
+        def Material "part_32_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_32_material>
+        )
+        {
+        }
+
+        def Material "part_31_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_31_material>
+        )
+        {
+        }
+
+        def Material "part_37_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_37_material>
+        )
+        {
+        }
+
+        def Material "part_39_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_39_material>
+        )
+        {
+        }
+
+        def Material "part_40_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_40_material>
+        )
+        {
+        }
+
+        def Material "under_arm_so101_v1_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/under_arm_so101_v1_material>
+        )
+        {
+        }
+
+        def Material "part_38_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_38_material>
+        )
+        {
+        }
+
+        def Material "under_arm_so101_v1_2_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/under_arm_so101_v1_2_material>
+        )
+        {
+        }
+
+        def Material "part_42_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_42_material>
+        )
+        {
+        }
+
+        def Material "part_44_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_44_material>
+        )
+        {
+        }
+
+        def Material "part_46_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_46_material>
+        )
+        {
+        }
+
+        def Material "part_45_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_45_material>
+        )
+        {
+        }
+
+        def Material "part_43_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_43_material>
+        )
+        {
+        }
+
+        def Material "part_63_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_63_material>
+        )
+        {
+        }
+
+        def Material "part_66_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_66_material>
+        )
+        {
+        }
+
+        def Material "part_65_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_65_material>
+        )
+        {
+        }
+
+        def Material "part_64_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_64_material>
+        )
+        {
+        }
+
+        def Material "part_69_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_69_material>
+        )
+        {
+        }
+
+        def Material "part_71_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_71_material>
+        )
+        {
+        }
+
+        def Material "part_61_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_61_material>
+        )
+        {
+        }
+
+        def Material "part_57_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_57_material>
+        )
+        {
+        }
+
+        def Material "part_62_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_62_material>
+        )
+        {
+        }
+
+        def Material "part_56_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/part_56_material>
+        )
+        {
+        }
+
+        def Material "moving_jaw_so101_v1_material" (
+            prepend references = @./MaterialsLibrary.usdc@</Materials/moving_jaw_so101_v1_material>
+        )
+        {
+        }
+    }
+
+    over "Geometry"
+    {
+        over "base_link"
+        {
+            over "part_30" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </so101/Materials/part_30_material>
+            }
+
+            over "part_28" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </so101/Materials/part_28_material>
+            }
+
+            over "base_arm_servo_cap" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </so101/Materials/base_arm_servo_cap_material>
+            }
+
+            over "part_24" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </so101/Materials/part_24_material>
+            }
+
+            over "base_arm_servo_case" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </so101/Materials/base_arm_servo_case_material>
+            }
+
+            over "base_arm" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </so101/Materials/base_arm_material>
+            }
+
+            over "part_26" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </so101/Materials/part_26_material>
+            }
+
+            over "part_31"
+            {
+                over "part_35" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </so101/Materials/part_35_material>
+                }
+
+                over "part_36" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </so101/Materials/part_36_material>
+                }
+
+                over "part_34" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </so101/Materials/part_34_material>
+                }
+
+                over "part_33" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </so101/Materials/part_33_material>
+                }
+
+                over "part_32" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </so101/Materials/part_32_material>
+                }
+
+                over "part_31" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </so101/Materials/part_31_material>
+                }
+
+                over "part_37"
+                {
+                    over "part_37" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </so101/Materials/part_37_material>
+                    }
+
+                    over "part_39" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </so101/Materials/part_39_material>
+                    }
+
+                    over "part_40" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </so101/Materials/part_40_material>
+                    }
+
+                    over "under_arm_so101_v1" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </so101/Materials/under_arm_so101_v1_material>
+                    }
+
+                    over "part_38" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        rel material:binding = </so101/Materials/part_38_material>
+                    }
+
+                    over "part_42"
+                    {
+                        over "under_arm_so101_v1__2" (
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </so101/Materials/under_arm_so101_v1_2_material>
+                        }
+
+                        over "part_42" (
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </so101/Materials/part_42_material>
+                        }
+
+                        over "part_44" (
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </so101/Materials/part_44_material>
+                        }
+
+                        over "part_46" (
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </so101/Materials/part_46_material>
+                        }
+
+                        over "part_45" (
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </so101/Materials/part_45_material>
+                        }
+
+                        over "part_43" (
+                            prepend apiSchemas = ["MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </so101/Materials/part_43_material>
+                        }
+
+                        over "part_63"
+                        {
+                            over "part_63" (
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                            )
+                            {
+                                rel material:binding = </so101/Materials/part_63_material>
+                            }
+
+                            over "part_66" (
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                            )
+                            {
+                                rel material:binding = </so101/Materials/part_66_material>
+                            }
+
+                            over "part_65" (
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                            )
+                            {
+                                rel material:binding = </so101/Materials/part_65_material>
+                            }
+
+                            over "part_64" (
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                            )
+                            {
+                                rel material:binding = </so101/Materials/part_64_material>
+                            }
+
+                            over "part_69" (
+                                prepend apiSchemas = ["MaterialBindingAPI"]
+                            )
+                            {
+                                rel material:binding = </so101/Materials/part_69_material>
+                            }
+
+                            over "part_56"
+                            {
+                                over "part_71" (
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                )
+                                {
+                                    rel material:binding = </so101/Materials/part_71_material>
+                                }
+
+                                over "part_61" (
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                )
+                                {
+                                    rel material:binding = </so101/Materials/part_61_material>
+                                }
+
+                                over "part_57" (
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                )
+                                {
+                                    rel material:binding = </so101/Materials/part_57_material>
+                                }
+
+                                over "part_62" (
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                )
+                                {
+                                    rel material:binding = </so101/Materials/part_62_material>
+                                }
+
+                                over "part_56" (
+                                    prepend apiSchemas = ["MaterialBindingAPI"]
+                                )
+                                {
+                                    rel material:binding = </so101/Materials/part_56_material>
+                                }
+
+                                over "moving_jaw_so101_v1"
+                                {
+                                    over "moving_jaw_so101_v1" (
+                                        prepend apiSchemas = ["MaterialBindingAPI"]
+                                    )
+                                    {
+                                        rel material:binding = </so101/Materials/moving_jaw_so101_v1_material>
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

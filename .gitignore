@@ -7,3 +7,5 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
+
+/src/ros2_astra_camera

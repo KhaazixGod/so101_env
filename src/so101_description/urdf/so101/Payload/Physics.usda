@@ -1,0 +1,487 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.2"
+    }
+    defaultPrim = "so101"
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "so101"
+{
+    def Scope "Physics"
+    {
+        def PhysicsFixedJoint "root_joint"
+        {
+            rel physics:body0 = </so101>
+            rel physics:body1 = </so101/Geometry/base_link>
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "gripper_frame_link_frame"
+        {
+            rel physics:body0 = </so101/Geometry/base_link/part_31/part_37/part_42/part_63/part_56>
+            rel physics:body1 = </so101/Geometry/base_link/part_31/part_37/part_42/part_63/part_56/gripper_frame_link>
+            point3f physics:localPos0 = (-9.3491e-8, 0, -0.114718)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.70710546, -0.7071081, 3.5360094e-13, -3.5352656e-13)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "jaw_tip_frame"
+        {
+            rel physics:body0 = </so101/Geometry/base_link/part_31/part_37/part_42/part_63/part_56/moving_jaw_so101_v1>
+            rel physics:body1 = </so101/Geometry/base_link/part_31/part_37/part_42/part_63/part_56/moving_jaw_so101_v1/jaw_tip>
+            point3f physics:localPos0 = (-0.0857177, 0.0121501, 0.0298826)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.5, -0.5, -0.50000316, -0.49999684)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsRevoluteJoint "gripper_joint"
+        {
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </so101/Geometry/base_link/part_31/part_37/part_42/part_63/part_56>
+            rel physics:body1 = </so101/Geometry/base_link/part_31/part_37/part_42/part_63/part_56/moving_jaw_so101_v1>
+            point3f physics:localPos0 = (-0.0298825, 0.01215, -0.029)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (-9.38184e-7, -0.70710546, 9.381874e-7, -0.7071081)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -0
+            float physics:upperLimit = 90.00021
+            custom float urdf:dynamics:damping = 0.6
+            custom float urdf:dynamics:friction = 0.052
+            custom float urdf:limit:effort = 2.94
+            custom float urdf:limit:velocity = 10
+        }
+
+        def PhysicsRevoluteJoint "joint_5"
+        {
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </so101/Geometry/base_link/part_31/part_37/part_42/part_63>
+            rel physics:body1 = </so101/Geometry/base_link/part_31/part_37/part_42/part_63/part_56>
+            point3f physics:localPos0 = (-0.00000135393, -0.0749445, 0.0304)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (0.49999815, -0.5, 0.5, 0.50000185)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -360.00027
+            float physics:upperLimit = 0
+            custom float urdf:dynamics:damping = 0.6
+            custom float urdf:dynamics:friction = 0.052
+            custom float urdf:limit:effort = 2.94
+            custom float urdf:limit:velocity = 10
+        }
+
+        def PhysicsRevoluteJoint "joint_4"
+        {
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </so101/Geometry/base_link/part_31/part_37/part_42>
+            rel physics:body1 = </so101/Geometry/base_link/part_31/part_37/part_42/part_63>
+            point3f physics:localPos0 = (-0.0025, -0.13015, -3.469447e-18)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -90.00021
+            float physics:upperLimit = 90.00021
+            custom float urdf:dynamics:damping = 0.6
+            custom float urdf:dynamics:friction = 0.052
+            custom float urdf:limit:effort = 2.94
+            custom float urdf:limit:velocity = 10
+        }
+
+        def PhysicsRevoluteJoint "joint_3"
+        {
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </so101/Geometry/base_link/part_31/part_37>
+            rel physics:body1 = </so101/Geometry/base_link/part_31/part_37/part_42>
+            point3f physics:localPos0 = (0.12647, -0.02745, 3.469447e-18)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -90.00021
+            float physics:upperLimit = 90.00021
+            custom float urdf:dynamics:damping = 0.6
+            custom float urdf:dynamics:friction = 0.052
+            custom float urdf:limit:effort = 2.94
+            custom float urdf:limit:velocity = 10
+        }
+
+        def PhysicsRevoluteJoint "joint_2"
+        {
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </so101/Geometry/base_link/part_31>
+            rel physics:body1 = </so101/Geometry/base_link/part_31/part_37>
+            point3f physics:localPos0 = (0.0305, -0.03045, 0.11355)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (-0.70710546, 0, 0.7071081, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -90.00021
+            float physics:upperLimit = 90.00021
+            custom float urdf:dynamics:damping = 0.6
+            custom float urdf:dynamics:friction = 0.052
+            custom float urdf:limit:effort = 2.94
+            custom float urdf:limit:velocity = 10
+        }
+
+        def PhysicsRevoluteJoint "joint_1"
+        {
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </so101/Geometry/base_link>
+            rel physics:body1 = </so101/Geometry/base_link/part_31>
+            point3f physics:localPos0 = (0, -0.05945, 0.0303)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -90.00021
+            float physics:upperLimit = 90.00021
+            custom float urdf:dynamics:damping = 0.6
+            custom float urdf:dynamics:friction = 0.052
+            custom float urdf:limit:effort = 2.94
+            custom float urdf:limit:velocity = 10
+        }
+    }
+
+    over "Geometry"
+    {
+        over "base_link" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsArticulationRootAPI", "NewtonArticulationRootAPI", "PhysicsMassAPI"]
+        )
+        {
+            point3f physics:centerOfMass = (-8.23546e-8, -0.0330587, 0.0416152)
+            float3 physics:diagonalInertia = (0.00014028014, 0.00018529985, 0.000188761)
+            float physics:mass = 0.147
+            quatf physics:principalAxes = (0.70181584, 0.0863459, 0.70180327, -0.0864354)
+
+            over "part_30_1" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+            )
+            {
+                uniform token physics:approximation = "convexDecomposition"
+            }
+
+            over "part_28_1" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+            )
+            {
+                uniform token physics:approximation = "convexDecomposition"
+            }
+
+            over "base_arm_servo_cap_1" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+            )
+            {
+                uniform token physics:approximation = "convexDecomposition"
+            }
+
+            over "part_24_1" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+            )
+            {
+                uniform token physics:approximation = "convexDecomposition"
+            }
+
+            over "base_arm_servo_case_1" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+            )
+            {
+                uniform token physics:approximation = "convexDecomposition"
+            }
+
+            over "base_arm_1" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+            )
+            {
+                uniform token physics:approximation = "convexDecomposition"
+            }
+
+            over "part_26_1" (
+                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+            )
+            {
+                uniform token physics:approximation = "convexDecomposition"
+            }
+
+            over "part_31" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                point3f physics:centerOfMass = (0.000287137, -0.0299711, 0.0722842)
+                float3 physics:diagonalInertia = (0.000028841236, 0.00017626712, 0.00018001634)
+                float physics:mass = 0.100006
+                quatf physics:principalAxes = (0.49965185, 0.5055687, 0.4883288, 0.5062443)
+
+                over "part_35_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                }
+
+                over "part_36_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                }
+
+                over "part_34_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                }
+
+                over "part_33_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                }
+
+                over "part_32_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                }
+
+                over "part_31_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                }
+
+                over "part_37" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    point3f physics:centerOfMass = (0.0892519, -0.00760896, 0.0305033)
+                    float3 physics:diagonalInertia = (0.00005740796, 0.00020419102, 0.00022740873)
+                    float physics:mass = 0.103
+                    quatf physics:principalAxes = (0.7080896, -0.7005195, 0.054373853, 0.070178635)
+
+                    over "part_37_1" (
+                        prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                    )
+                    {
+                        uniform token physics:approximation = "convexDecomposition"
+                    }
+
+                    over "part_39_1" (
+                        prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                    )
+                    {
+                        uniform token physics:approximation = "convexDecomposition"
+                    }
+
+                    over "part_40_1" (
+                        prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                    )
+                    {
+                        uniform token physics:approximation = "convexDecomposition"
+                    }
+
+                    over "under_arm_so101_v1_1" (
+                        prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                    )
+                    {
+                        uniform token physics:approximation = "convexDecomposition"
+                    }
+
+                    over "part_38_1" (
+                        prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                    )
+                    {
+                        uniform token physics:approximation = "convexDecomposition"
+                    }
+
+                    over "part_42" (
+                        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                    )
+                    {
+                        point3f physics:centerOfMass = (-0.00130154, -0.0846422, 0.0306047)
+                        float3 physics:diagonalInertia = (0.000048595033, 0.00019105346, 0.0002273264)
+                        float physics:mass = 0.104
+                        quatf physics:principalAxes = (-0.50152695, 0.5121313, 0.4870414, 0.4989819)
+
+                        over "under_arm_so101_v1__2_1" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                        }
+
+                        over "part_42_1" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                        }
+
+                        over "part_44_1" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                        }
+
+                        over "part_46_1" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                        }
+
+                        over "part_45_1" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                        }
+
+                        over "part_43_1" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                        }
+
+                        over "part_63" (
+                            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                        )
+                        {
+                            point3f physics:centerOfMass = (0.0000305995, -0.0466423, 0.0260288)
+                            float3 physics:diagonalInertia = (0.000037834347, 0.0000467099, 0.00007191175)
+                            float physics:mass = 0.079
+                            quatf physics:principalAxes = (0.677301, 0.20492426, 0.6768591, -0.20280842)
+
+                            over "part_63_1" (
+                                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                            )
+                            {
+                                uniform token physics:approximation = "convexDecomposition"
+                            }
+
+                            over "part_66_1" (
+                                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                            )
+                            {
+                                uniform token physics:approximation = "convexDecomposition"
+                            }
+
+                            over "part_65_1" (
+                                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                            )
+                            {
+                                uniform token physics:approximation = "convexDecomposition"
+                            }
+
+                            over "part_64_1" (
+                                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                            )
+                            {
+                                uniform token physics:approximation = "convexDecomposition"
+                            }
+
+                            over "part_69_1" (
+                                prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                            )
+                            {
+                                uniform token physics:approximation = "convexDecomposition"
+                            }
+
+                            over "part_56" (
+                                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                            )
+                            {
+                                point3f physics:centerOfMass = (0.00151436, -0.00212809, -0.0370413)
+                                float3 physics:diagonalInertia = (0.00002980362, 0.000056252047, 0.00006175144)
+                                float physics:mass = 0.087
+                                quatf physics:principalAxes = (0.71195114, 0.09204031, 0.679554, -0.15119685)
+
+                                over "part_71_1" (
+                                    prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                                )
+                                {
+                                    uniform token physics:approximation = "convexDecomposition"
+                                }
+
+                                over "part_61_1" (
+                                    prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                                )
+                                {
+                                    uniform token physics:approximation = "convexDecomposition"
+                                }
+
+                                over "part_57_1" (
+                                    prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                                )
+                                {
+                                    uniform token physics:approximation = "convexDecomposition"
+                                }
+
+                                over "part_62_1" (
+                                    prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                                )
+                                {
+                                    uniform token physics:approximation = "convexDecomposition"
+                                }
+
+                                over "part_56_1" (
+                                    prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                                )
+                                {
+                                    uniform token physics:approximation = "convexDecomposition"
+                                }
+
+                                over "gripper_frame_link" (
+                                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                )
+                                {
+                                    point3f physics:centerOfMass = (0, 0, 0)
+                                    float3 physics:diagonalInertia = (0, 0, 0)
+                                    float physics:mass = 1e-9
+                                    quatf physics:principalAxes = (1, 0, 0, 0)
+                                }
+
+                                over "moving_jaw_so101_v1" (
+                                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                )
+                                {
+                                    point3f physics:centerOfMass = (-0.0318744, 0.000540953, 0.0288781)
+                                    float3 physics:diagonalInertia = (0.000005714235, 0.0000064540027, 0.000011330182)
+                                    float physics:mass = 0.012
+                                    quatf physics:principalAxes = (-0.6969524, 0.7046812, 0.06447843, -0.11629368)
+
+                                    over "moving_jaw_so101_v1_1" (
+                                        prepend apiSchemas = ["PhysicsCollisionAPI", "NewtonCollisionAPI", "PhysicsMeshCollisionAPI", "NewtonMeshCollisionAPI"]
+                                    )
+                                    {
+                                        uniform token physics:approximation = "convexDecomposition"
+                                    }
+
+                                    over "jaw_tip" (
+                                        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                                    )
+                                    {
+                                        point3f physics:centerOfMass = (0, 0, 0)
+                                        float3 physics:diagonalInertia = (0, 0, 0)
+                                        float physics:mass = 1e-9
+                                        quatf physics:principalAxes = (1, 0, 0, 0)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

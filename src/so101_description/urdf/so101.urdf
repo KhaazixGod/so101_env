@@ -1,297 +1,763 @@
-<?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="so101">
-
-  <!-- ================= 0. WORLD LINK ================= -->
-  <link name="world"/>
-
-  <joint name="world_to_base" type="fixed">
-    <parent link="world"/>
-    <child link="base_link"/>
-    <origin xyz="0 0 0" rpy="1.5708 0 0"/>
-  </joint>
-
-  <!-- ================= 1. BASE LINK ================= -->
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="so101">
+  <!-- Link base_arm -->
   <link name="base_link">
     <inertial>
-      <mass value="0.234577"/>
-      <origin xyz="-4.17e-05 0.032687 0.032297" rpy="0 0 0"/>
-      <inertia ixx="0.000310491" ixy="2.68e-07" ixz="-6.02e-07" iyy="0.000247507" iyz="2.22e-05" izz="0.000303595"/>
+      <origin xyz="-8.23546e-08 -0.0330587 0.0416152" rpy="0 0 0" />
+      <mass value="0.147" />
+      <inertia ixx="0.000188761" ixy="4.03319e-10" ixz="-2.10335e-10" iyy="0.000182652" iyz="-1.05922e-05" izz="0.000142928" />
     </inertial>
+    <!-- Part part_30 -->
     <visual>
-      <origin xyz="0 -0.0704 0.016" rpy="0 0 0"/>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/base_link.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/part_30.stl" />
       </geometry>
-      <material name="beige"><color rgba="0.917 0.917 0.917 1.0"/></material>
+      <material name="part_30_material">
+        <color rgba="0.972549 0.529412 0.00392157 1" />
+      </material>
     </visual>
     <collision>
-      <!-- Đã sửa: Copy y hệt visual -->
-      <origin xyz="0 -0.0704 0.016" rpy="0 0 0"/>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/base_link_collision.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/part_30.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_28 -->
+    <visual>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_28.stl" />
+      </geometry>
+      <material name="part_28_material">
+        <color rgba="0.972549 0.529412 0.00392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_28.stl" />
+      </geometry>
+    </collision>
+    <!-- Part base_arm_servo_cap -->
+    <visual>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/base_arm_servo_cap.stl" />
+      </geometry>
+      <material name="base_arm_servo_cap_material">
+        <color rgba="0.615686 0.811765 0.929412 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/base_arm_servo_cap.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_24 -->
+    <visual>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_24.stl" />
+      </geometry>
+      <material name="part_24_material">
+        <color rgba="0.768627 0.886275 0.952941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_24.stl" />
+      </geometry>
+    </collision>
+    <!-- Part base_arm_servo_case -->
+    <visual>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/base_arm_servo_case.stl" />
+      </geometry>
+      <material name="base_arm_servo_case_material">
+        <color rgba="0.917647 0.917647 0.917647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/base_arm_servo_case.stl" />
+      </geometry>
+    </collision>
+    <!-- Part base_arm -->
+    <visual>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/base_arm.stl" />
+      </geometry>
+      <material name="base_arm_material">
+        <color rgba="0.964706 0.964706 0.952941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/base_arm.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_26 -->
+    <visual>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_26.stl" />
+      </geometry>
+      <material name="part_26_material">
+        <color rgba="0.498039 0.498039 0.498039 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50205 -0.016 -0.068" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_26.stl" />
       </geometry>
     </collision>
   </link>
-
-  <!-- ================= JOINT 1 ================= -->
-  <joint name="joint_1" type="revolute">
-    <origin xyz="0 0.031 0.05955" rpy="0 0 0"/>
-    <axis xyz="0 1 0"/>
-    <parent link="base_link"/>
-    <child link="link_2"/>
-    <limit effort="2.5" velocity="3.0" lower="-3.14159" upper="0.90101"/>
-    <dynamics damping="0.05" friction="0.02"/>
-  </joint>
-
-  <!-- ================= 2. LINK 2 ================= -->
-  <link name="link_2">
+  <!-- Link part_31 -->
+  <link name="part_31">
     <inertial>
-      <mass value="0.17508"/>
-      <origin xyz="0.027311 0.067652 0.015235" rpy="0 1.05471 0"/>
-      <inertia ixx="0.000301075" ixy="2.74e-06" ixz="5.38e-06" iyy="7.07e-05" iyz="2.06e-06" izz="0.000296271"/>
+      <origin xyz="0.000287137 -0.0299711 0.0722842" rpy="0 0 0" />
+      <mass value="0.100006" />
+      <inertia ixx="0.000176253" ixy="1.08325e-07" ixz="-1.5472e-06" iyy="0.000179992" iyz="1.8317e-06" izz="2.88797e-05" />
     </inertial>
+    <!-- Part part_35 -->
     <visual>
-      <origin xyz="-0.037878 -0.1014 -0.021491" rpy="0 1.05471 0"/>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/link_2.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/part_35.stl" />
       </geometry>
-      <material name="orange"><color rgba="0.917 0.917 0.917 1.0"/></material>
+      <material name="part_35_material">
+        <color rgba="0.972549 0.529412 0.00392157 1" />
+      </material>
     </visual>
     <collision>
-      <!-- Đã sửa: Copy y hệt visual -->
-      <origin xyz="-0.037878 -0.1014 -0.021491" rpy="0 1.05471 0"/>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/link_2_collision.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/part_35.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_36 -->
+    <visual>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_36.stl" />
+      </geometry>
+      <material name="part_36_material">
+        <color rgba="0.972549 0.529412 0.00392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_36.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_34 -->
+    <visual>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_34.stl" />
+      </geometry>
+      <material name="part_34_material">
+        <color rgba="0.917647 0.917647 0.917647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_34.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_33 -->
+    <visual>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_33.stl" />
+      </geometry>
+      <material name="part_33_material">
+        <color rgba="0.615686 0.811765 0.929412 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_33.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_32 -->
+    <visual>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_32.stl" />
+      </geometry>
+      <material name="part_32_material">
+        <color rgba="0.498039 0.498039 0.498039 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_32.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_31 -->
+    <visual>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_31.stl" />
+      </geometry>
+      <material name="part_31_material">
+        <color rgba="0.768627 0.886275 0.952941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50205 0.04345 -0.0983" rpy="1.5708 -0 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_31.stl" />
       </geometry>
     </collision>
   </link>
-
-  <!-- ================= JOINT 2 ================= -->
-  <joint name="joint_2" type="revolute">
-    <origin xyz="0.042226 0.11745 -0.012719" rpy="0 1.05471 0"/>
-    <axis xyz="-1 0 0"/>
-    <parent link="link_2"/>
-    <child link="link_3"/>
-    <limit effort="2.5" velocity="3.0" lower="-1.20475" upper="1.93684"/>
-    <dynamics damping="0.05" friction="0.02"/>
-  </joint>
-
-  <!-- ================= 3. LINK 3 ================= -->
-  <link name="link_3">
+  <!-- Link part_37 -->
+  <link name="part_37">
     <inertial>
-      <mass value="0.218075"/>
-      <origin xyz="-0.032577 0.085013 0.040906" rpy="0.366045 0 0"/>
-      <inertia ixx="0.000438117" ixy="-2.84e-06" ixz="-2.58e-06" iyy="0.000246471" iyz="-0.000150744" izz="0.00040782"/>
+      <origin xyz="0.0892519 -0.00760896 0.0305033" rpy="0 0 0" />
+      <mass value="0.103" />
+      <inertia ixx="6.27127e-05" ixy="2.93711e-05" ixz="3.02865e-06" iyy="0.000222167" iyz="-8.38129e-07" izz="0.000204128" />
     </inertial>
+    <!-- Part part_37 -->
     <visual>
-      <origin xyz="-0.0319 -0.177865 -0.14743" rpy="0.366045 0 0"/>
+      <origin xyz="-0.21185 0.0739 0.53255" rpy="1.5708 1.5708 0" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/link_3.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/part_37.stl" />
       </geometry>
-      <material name="blue"><color rgba="0.917 0.917 0.917 1.0"/></material>
+      <material name="part_37_material">
+        <color rgba="0.768627 0.886275 0.952941 1" />
+      </material>
     </visual>
     <collision>
-      <!-- Đã sửa: Copy y hệt visual -->
-      <origin xyz="-0.0319 -0.177865 -0.14743" rpy="0.366045 0 0"/>
+      <origin xyz="-0.21185 0.0739 0.53255" rpy="1.5708 1.5708 0" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/link_3_collision.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/part_37.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_39 -->
+    <visual>
+      <origin xyz="-0.21185 0.0739 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_39.stl" />
+      </geometry>
+      <material name="part_39_material">
+        <color rgba="0.917647 0.917647 0.917647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.21185 0.0739 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_39.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_40 -->
+    <visual>
+      <origin xyz="-0.21185 0.0739 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_40.stl" />
+      </geometry>
+      <material name="part_40_material">
+        <color rgba="0.972549 0.529412 0.00392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.21185 0.0739 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_40.stl" />
+      </geometry>
+    </collision>
+    <!-- Part under_arm_so101_v1 -->
+    <visual>
+      <origin xyz="-0.21185 0.0739 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/under_arm_so101_v1.stl" />
+      </geometry>
+      <material name="under_arm_so101_v1_material">
+        <color rgba="0.964706 0.964706 0.952941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.21185 0.0739 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/under_arm_so101_v1.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_38 -->
+    <visual>
+      <origin xyz="-0.21185 0.0739 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_38.stl" />
+      </geometry>
+      <material name="part_38_material">
+        <color rgba="0.498039 0.498039 0.498039 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.21185 0.0739 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_38.stl" />
       </geometry>
     </collision>
   </link>
-
-  <!-- ================= JOINT 3 ================= -->
-  <joint name="joint_3" type="revolute">
-    <origin xyz="0 0.106979 0.078865" rpy="0.366045 0 0"/>
-    <axis xyz="-1 0 0"/>
-    <parent link="link_3"/>
-    <child link="link_4"/>
-    <limit effort="2.5" velocity="3.0" lower="-1.55826" upper="1.23427"/>
-    <dynamics damping="0.05" friction="0.02"/>
-  </joint>
-
-  <!-- ================= 4. LINK 4 ================= -->
-  <link name="link_4">
+  <!-- Link part_42 -->
+  <link name="part_42">
     <inertial>
-      <mass value="0.188834"/>
-      <origin xyz="-0.03212 0.010894 0.085073" rpy="-0.161994 0 0"/>
-      <inertia ixx="0.000336984" ixy="6.65e-08" ixz="-5.91e-06" iyy="0.000407646" iyz="-3.08e-05" izz="0.000112943"/>
+      <origin xyz="-0.00130154 -0.0846422 0.0306047" rpy="0 0 0" />
+      <mass value="0.104" />
+      <inertia ixx="0.00022719" ixy="-4.93396e-06" ixz="-5.16064e-08" iyy="4.88039e-05" iyz="-3.2128e-06" izz="0.000190981" />
     </inertial>
+    <!-- Part under_arm_so101_v1_2 -->
     <visual>
-      <origin xyz="-0.03185 -0.360064 -0.051957" rpy="-0.161994 0 0"/>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/link_4.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/under_arm_so101_v1__2.stl" />
       </geometry>
-      <material name="yellow"><color rgba="0.917 0.917 0.917 1.0"/></material>
+      <material name="under_arm_so101_v1_2_material">
+        <color rgba="0.964706 0.964706 0.952941 1" />
+      </material>
     </visual>
     <collision>
-      <!-- Đã sửa: Copy y hệt visual -->
-      <origin xyz="-0.03185 -0.360064 -0.051957" rpy="-0.161994 0 0"/>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/link_4_collision.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/under_arm_so101_v1__2.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_42 -->
+    <visual>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_42.stl" />
+      </geometry>
+      <material name="part_42_material">
+        <color rgba="0.768627 0.886275 0.952941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_42.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_44 -->
+    <visual>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_44.stl" />
+      </geometry>
+      <material name="part_44_material">
+        <color rgba="0.917647 0.917647 0.917647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_44.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_46 -->
+    <visual>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_46.stl" />
+      </geometry>
+      <material name="part_46_material">
+        <color rgba="0.972549 0.529412 0.00392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_46.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_45 -->
+    <visual>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_45.stl" />
+      </geometry>
+      <material name="part_45_material">
+        <color rgba="0.972549 0.529412 0.00392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_45.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_43 -->
+    <visual>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_43.stl" />
+      </geometry>
+      <material name="part_43_material">
+        <color rgba="0.498039 0.498039 0.498039 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.33832 0.10135 0.53255" rpy="1.5708 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_43.stl" />
       </geometry>
     </collision>
   </link>
-
-  <!-- ================= JOINT 4 ================= -->
-  <joint name="joint_4" type="revolute">
-    <origin xyz="0 0.017637 0.139228" rpy="-0.161994 0 0"/>
-    <axis xyz="-1 0 0"/>
-    <parent link="link_4"/>
-    <child link="link_5"/>
-    <limit effort="2.5" velocity="3.0" lower="-0.210268" upper="2.58226"/>
-    <dynamics damping="0.05" friction="0.02"/>
-  </joint>
-
-  <!-- ================= 5. LINK 5 ================= -->
-  <link name="link_5">
+  <!-- Link part_63 -->
+  <link name="part_63">
     <inertial>
-      <mass value="0.064431"/>
-      <origin xyz="-0.029124 -0.036838 0.007911" rpy="-0.210268 0 0"/>
-      <inertia ixx="3.40e-05" ixy="5.23e-06" ixz="-1.22e-06" iyy="5.34e-05" iyz="4.95e-06" izz="7.60e-05"/>
+      <origin xyz="3.05995e-05 -0.0466423 0.0260288" rpy="0 0 0" />
+      <mass value="0.079" />
+      <inertia ixx="7.19115e-05" ixy="-8.39082e-08" ixz="-4.15236e-09" iyy="4.40044e-05" iyz="-4.08583e-06" izz="4.05401e-05" />
     </inertial>
+    <!-- Part part_63 -->
     <visual>
-      <origin xyz="-0.0319 -0.386486 -0.172736" rpy="-0.210268 0 0"/>
+      <origin xyz="-0.2315 -0.33582 0.53255" rpy="-0 1.5708 0" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/link_5.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/part_63.stl" />
       </geometry>
-      <material name="grey"><color rgba="0.917 0.917 0.917 1.0"/></material>
+      <material name="part_63_material">
+        <color rgba="0.972549 0.529412 0.00392157 1" />
+      </material>
     </visual>
     <collision>
-      <!-- Đã sửa: Copy y hệt visual -->
-      <origin xyz="-0.0319 -0.386486 -0.172736" rpy="-0.210268 0 0"/>
+      <origin xyz="-0.2315 -0.33582 0.53255" rpy="-0 1.5708 0" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/link_5_collision.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/part_63.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_66 -->
+    <visual>
+      <origin xyz="-0.2315 -0.33582 0.53255" rpy="-0 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_66.stl" />
+      </geometry>
+      <material name="part_66_material">
+        <color rgba="0.980392 0.713725 0.00392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.2315 -0.33582 0.53255" rpy="-0 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_66.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_65 -->
+    <visual>
+      <origin xyz="-0.2315 -0.33582 0.53255" rpy="-0 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_65.stl" />
+      </geometry>
+      <material name="part_65_material">
+        <color rgba="0.768627 0.886275 0.952941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.2315 -0.33582 0.53255" rpy="-0 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_65.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_64 -->
+    <visual>
+      <origin xyz="-0.2315 -0.33582 0.53255" rpy="-0 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_64.stl" />
+      </geometry>
+      <material name="part_64_material">
+        <color rgba="0.768627 0.886275 0.952941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.2315 -0.33582 0.53255" rpy="-0 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_64.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_69 -->
+    <visual>
+      <origin xyz="-0.2315 -0.33582 0.53255" rpy="-0 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_69.stl" />
+      </geometry>
+      <material name="part_69_material">
+        <color rgba="0.901961 0.901961 0.901961 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.2315 -0.33582 0.53255" rpy="-0 1.5708 0" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_69.stl" />
       </geometry>
     </collision>
   </link>
-
-  <!-- ================= JOINT 5 ================= -->
-  <joint name="joint_5" type="revolute">
-    <origin xyz="-0.03205 -0.072077 0.015383" rpy="-0.210268 0 0"/>
-    <axis xyz="0 1 0"/>
-    <parent link="link_5"/>
-    <child link="wrist_roll_follower_so101_v1"/>
-    <limit effort="2.5" velocity="3.0" lower="-0.79539" upper="0.78539"/>
-  </joint>
-
-  <!-- ================= 6. WRIST ROLL ================= -->
-  <link name="wrist_roll_follower_so101_v1">
+  <!-- Link part_56 -->
+  <link name="part_56">
     <inertial>
-      <mass value="0.05249"/>
-      <origin xyz="-0.003111 -0.032711 -0.007317" rpy="0 -1.1612 0"/>
-      <inertia ixx="3.92e-05" ixy="-1.59e-06" ixz="-2.60e-06" iyy="1.33e-05" iyz="-3.47e-06" izz="3.53e-05"/>
+      <origin xyz="0.00151436 -0.00212809 -0.0370413" rpy="0 0 0" />
+      <mass value="0.087" />
+      <inertia ixx="6.16766e-05" ixy="1.31188e-07" ixz="-1.08843e-06" iyy="5.32182e-05" iyz="-8.48484e-06" izz="3.29123e-05" />
     </inertial>
+    <!-- Part part_71 -->
     <visual>
-      <origin xyz="0.229013 -0.26822 -0.099262" rpy="0 -1.1612 0"/>
+      <origin xyz="-0.50215 0.231498 -0.260876" rpy="1.5708 -0 -1e-12" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/wrist_roll_follower_so101_v1.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/part_71.stl" />
       </geometry>
-      <material name="white"><color rgba="0.917 0.917 0.917 1.0"/></material>
+      <material name="part_71_material">
+        <color rgba="0.917647 0.917647 0.917647 1" />
+      </material>
     </visual>
     <collision>
-      <!-- Đã sửa: Copy y hệt visual -->
-      <origin xyz="0.229013 -0.26822 -0.099262" rpy="0 -1.1612 0"/>
+      <origin xyz="-0.50215 0.231498 -0.260876" rpy="1.5708 -0 -1e-12" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/wrist_roll_follower_so101_v1.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/part_71.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_61 -->
+    <visual>
+      <origin xyz="-0.50215 0.231498 -0.260876" rpy="1.5708 -0 -1e-12" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_61.stl" />
+      </geometry>
+      <material name="part_61_material">
+        <color rgba="0.980392 0.713725 0.00392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50215 0.231498 -0.260876" rpy="1.5708 -0 -1e-12" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_61.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_57 -->
+    <visual>
+      <origin xyz="-0.50215 0.231498 -0.260876" rpy="1.5708 -0 -1e-12" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_57.stl" />
+      </geometry>
+      <material name="part_57_material">
+        <color rgba="0.972549 0.529412 0.00392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50215 0.231498 -0.260876" rpy="1.5708 -0 -1e-12" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_57.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_62 -->
+    <visual>
+      <origin xyz="-0.50215 0.231498 -0.260876" rpy="1.5708 -0 -1e-12" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_62.stl" />
+      </geometry>
+      <material name="part_62_material">
+        <color rgba="0.972549 0.529412 0.00392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50215 0.231498 -0.260876" rpy="1.5708 -0 -1e-12" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_62.stl" />
+      </geometry>
+    </collision>
+    <!-- Part part_56 -->
+    <visual>
+      <origin xyz="-0.50215 0.231498 -0.260876" rpy="1.5708 -0 -1e-12" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_56.stl" />
+      </geometry>
+      <material name="part_56_material">
+        <color rgba="0.768627 0.886275 0.952941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.50215 0.231498 -0.260876" rpy="1.5708 -0 -1e-12" />
+      <geometry>
+        <mesh filename="package://so101_description/meshes/part_56.stl" />
       </geometry>
     </collision>
   </link>
-
-  <!-- ================= GRIPPER JOINT ================= -->
-  <joint name="gripper_joint" type="revolute">
-    <origin xyz="0.019722 -0.026609 0.004746" rpy="0 -1.1612 0"/>
-    <axis xyz="0 0 -1"/>
-    <parent link="wrist_roll_follower_so101_v1"/>
-    <child link="moving_jaw_so101_v1"/>
-    <limit effort="2.5" velocity="3.0" lower="-0.451427" upper="0.59577"/>
+  <!-- Frame gripper_frame_link (dummy link + fixed joint) -->
+  <link name="gripper_frame_link">
+    <origin xyz="0 0 0" rpy="0 -0 0" />
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="1e-9" />
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+  </link>
+  <joint name="gripper_frame_link_frame" type="fixed">
+    <origin xyz="-9.3491e-08 -0 -0.114718" rpy="-1.5708 -0 -1e-12" />
+    <parent link="part_56" />
+    <child link="gripper_frame_link" />
+    <axis xyz="0 0 0" />
   </joint>
-
-  <!-- ================= 7. MOVING JAW ================= -->
+  <!-- Link moving_jaw_so101_v1 -->
   <link name="moving_jaw_so101_v1">
     <inertial>
-      <mass value="0.007332"/>
-      <origin xyz="0.018596 -0.030687 0.014666" rpy="0 0 0.59577"/>
-      <inertia ixx="2.38e-06" ixy="1.12e-06" ixz="-1.67e-07" iyy="9.55e-07" iyz="2.83e-07" izz="2.90e-06"/>
+      <origin xyz="-0.0318744 0.000540953 0.0288781" rpy="0 0 0" />
+      <mass value="0.012" />
+      <inertia ixx="5.79235e-06" ixy="4.10789e-07" ixz="1.81626e-07" iyy="1.12997e-05" iyz="-6.24249e-09" izz="6.40637e-06" />
     </inertial>
+    <!-- Part moving_jaw_so101_v1 -->
     <visual>
-      <origin xyz="0.125599 -0.206751 -0.2334" rpy="0 0 0.59577"/>
+      <origin xyz="-0.314753 0.0530135 -0.472268" rpy="2.21708 -1.57079 1.5708" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/Moving_Jaw_SO101_v1.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/moving_jaw_so101_v1.stl" />
       </geometry>
-      <material name="grey"><color rgba="0.6 0.6 0.6 1.0"/></material>
+      <material name="moving_jaw_so101_v1_material">
+        <color rgba="0.964706 0.964706 0.952941 1" />
+      </material>
     </visual>
     <collision>
-      <origin xyz="0.125599 -0.206751 -0.2334" rpy="0 0 0.59577"/>
+      <origin xyz="-0.314753 0.0530135 -0.472268" rpy="2.21708 -1.57079 1.5708" />
       <geometry>
-        <mesh filename="package://so101_description/meshes/Moving_Jaw_SO101_v1.stl" scale="1 1 1"/>
+        <mesh filename="package://so101_description/meshes/moving_jaw_so101_v1.stl" />
       </geometry>
     </collision>
   </link>
-
-<!-- ================= ĐỌC FILE YAML ================= -->
-  <!-- Tìm và đọc file initial_positions.yaml từ package MoveIt -->
-  <xacro:property name="initial_positions_file" value="$(find so101_moveit_config)/config/initial_positions.yaml" />
-  <xacro:property name="initial_positions" value="${xacro.load_yaml(initial_positions_file)['initial_positions']}" />
-
-  <!-- ================= ROS2 CONTROL ================= -->
-  <ros2_control name="GazeboSimSystem" type="system">
-    <hardware>
-      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-    </hardware>
-    
+  <!-- Frame jaw_tip (dummy link + fixed joint) -->
+  <link name="jaw_tip">
+    <origin xyz="0 0 0" rpy="0 -0 0" />
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="1e-9" />
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+  </link>
+  <joint name="jaw_tip_frame" type="fixed">
+    <origin xyz="-0.0857177 0.0121501 0.0298826" rpy="-3.14159 -1.57079 1.5708" />
+    <parent link="moving_jaw_so101_v1" />
+    <child link="jaw_tip" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <!-- Joint from part_56 to moving_jaw_so101_v1 -->
+  <joint name="gripper_joint" type="revolute">
+    <origin xyz="-0.0298825 0.01215 -0.029" rpy="3.14159 -1.5708 0" />
+    <parent link="part_56" />
+    <child link="moving_jaw_so101_v1" />
+    <axis xyz="0 0 1" />
+    <limit effort="2.94" velocity="10" lower="-0" upper="1.5708" />
+    <dynamics damping="0.6" friction="0.052" />
+  </joint>
+  <!-- Joint from part_63 to part_56 -->
+  <joint name="joint_5" type="revolute">
+    <origin xyz="-1.35393e-06 -0.0749445 0.0304" rpy="-1.5708 1.5708 0" />
+    <parent link="part_63" />
+    <child link="part_56" />
+    <axis xyz="0 0 1" />
+    <limit effort="2.94" velocity="10" lower="-6.28319" upper="0" />
+    <dynamics damping="0.6" friction="0.052" />
+  </joint>
+  <!-- Joint from part_42 to part_63 -->
+  <joint name="joint_4" type="revolute">
+    <origin xyz="-0.0025 -0.13015 -0" rpy="0 -0 0" />
+    <parent link="part_42" />
+    <child link="part_63" />
+    <axis xyz="0 0 1" />
+    <limit effort="2.94" velocity="10" lower="-1.5708" upper="1.5708" />
+    <dynamics damping="0.6" friction="0.052" />
+  </joint>
+  <!-- Joint from part_37 to part_42 -->
+  <joint name="joint_3" type="revolute">
+    <origin xyz="0.12647 -0.02745 -0" rpy="-0 0 -0" />
+    <parent link="part_37" />
+    <child link="part_42" />
+    <axis xyz="0 0 1" />
+    <limit effort="2.94" velocity="10" lower="-1.5708" upper="1.5708" />
+    <dynamics damping="0.6" friction="0.052" />
+  </joint>
+  <!-- Joint from part_31 to part_37 -->
+  <joint name="joint_2" type="revolute">
+    <origin xyz="0.0305 -0.03045 0.11355" rpy="0 -1.5708 0" />
+    <parent link="part_31" />
+    <child link="part_37" />
+    <axis xyz="0 0 1" />
+    <limit effort="2.94" velocity="10" lower="-1.5708" upper="1.5708" />
+    <dynamics damping="0.6" friction="0.052" />
+  </joint>
+  <!-- Joint from base_arm to part_31 -->
+  <joint name="joint_1" type="revolute">
+    <origin xyz="-0 -0.05945 0.0303" rpy="-0 0 0" />
+    <parent link="base_link" />
+    <child link="part_31" />
+    <axis xyz="0 0 1" />
+    <limit effort="2.94" velocity="10" lower="-1.5708" upper="1.5708" />
+    <dynamics damping="0.6" friction="0.052" />
+  </joint>
+  <transmission name="shoulder_pan_trans">
+    <type>transmission_interface/SimpleTransmission</type>
     <joint name="joint_1">
-      <command_interface name="position"/>
-      <state_interface name="position">
-        <param name="initial_value">${initial_positions['joint_1']}</param>
-      </state_interface>
-      <state_interface name="velocity"/>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-    
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="shoulder_lift_trans">
+    <type>transmission_interface/SimpleTransmission</type>
     <joint name="joint_2">
-      <command_interface name="position"/>
-      <state_interface name="position">
-        <param name="initial_value">${initial_positions['joint_2']}</param>
-      </state_interface>
-      <state_interface name="velocity"/>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-    
+    <actuator name="motor2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="elbow_flex_trans">
+    <type>transmission_interface/SimpleTransmission</type>
     <joint name="joint_3">
-      <command_interface name="position"/>
-      <state_interface name="position">
-        <param name="initial_value">${initial_positions['joint_3']}</param>
-      </state_interface>
-      <state_interface name="velocity"/>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-    
+    <actuator name="motor3">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="wrist_flex_trans">
+    <type>transmission_interface/SimpleTransmission</type>
     <joint name="joint_4">
-      <command_interface name="position"/>
-      <state_interface name="position">
-        <param name="initial_value">${initial_positions['joint_4']}</param>
-      </state_interface>
-      <state_interface name="velocity"/>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-    
+    <actuator name="motor4">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="wrist_roll_trans">
+    <type>transmission_interface/SimpleTransmission</type>
     <joint name="joint_5">
-      <command_interface name="position"/>
-      <state_interface name="position">
-        <param name="initial_value">${initial_positions['joint_5']}</param>
-      </state_interface>
-      <state_interface name="velocity"/>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-    
+    <actuator name="motor5">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="gripper_trans">
+    <type>transmission_interface/SimpleTransmission</type>
     <joint name="gripper_joint">
-      <command_interface name="position"/>
-      <state_interface name="position">
-        <param name="initial_value">${initial_positions['gripper_joint']}</param>
-      </state_interface>
-      <state_interface name="velocity"/>
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
-  </ros2_control>
-
-  <!-- Plugin Gazebo -->
-  <gazebo>
-    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-      <parameters>$(find so101_gazebo)/config/so101_controllers.yaml</parameters>
-    </plugin>
-  </gazebo>
+    <actuator name="motor6">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
 </robot>

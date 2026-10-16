@@ -4,49 +4,20 @@
         string creator = "URDF USD Converter v0.1.2"
     }
     defaultPrim = "so101"
-    doc = """Generated from Composed Stage of root layer /tmp/tmpm3833wql/so101.usdc
-
-
-Generated from Composed Stage of root layer /tmp/urdf_import_so101_5zxchamo/usdex_so101/so101.usdc
-
-
-Generated from Composed Stage of root layer /tmp/urdf_import_so101_5zxchamo/temp_so101/so101.usd
-
-
-Generated from Composed Stage of root layer /home/pread/Project/so101/src/so101_description/urdf/so101/payloads/base.usd
-"""
     kilogramsPerUnit = 1
     metersPerUnit = 1
     upAxis = "Z"
 )
 
 def Xform "so101" (
-    prepend references = @./payloads/base.usda@
-    variants = {
-        string Physics = "physx"
+    prepend apiSchemas = ["GeomModelAPI"]
+    assetInfo = {
+        string name = "so101"
     }
-    append variantSets = "Physics"
+    kind = "component"
+    prepend payload = @./Payload/Contents.usda@
 )
 {
-    variantSet "Physics" = {
-        "mujoco" (
-            prepend payload = @./payloads/Physics/mujoco.usda@
-        ) {
-
-        }
-        "none" {
-
-        }
-        "physics" (
-            prepend payload = @./payloads/Physics/physics.usda@
-        ) {
-
-        }
-        "physx" (
-            prepend payload = @./payloads/Physics/physx.usda@
-        ) {
-
-        }
-    }
+    float3[] extentsHint = [(-0.05751251, -0.44520468, -2.6206848e-7), (0.057512503, 0.002999446, 0.3145602), (3.4028235e38, 3.4028235e38, 3.4028235e38), (-3.4028235e38, -3.4028235e38, -3.4028235e38), (3.4028235e38, 3.4028235e38, 3.4028235e38), (-3.4028235e38, -3.4028235e38, -3.4028235e38), (-0.05751251, -0.44520468, -2.6206848e-7), (0.057512503, 0.002999446, 0.3145602)]
 }
 

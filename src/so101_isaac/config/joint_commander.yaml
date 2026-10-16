@@ -12,11 +12,24 @@ joint_commander:
     command_topic: /joint_command
 
     # How often a command is streamed to Isaac Sim.
-    rate_hz: 60.0
+    #
+    # 2026-10-12: raised from 60 -- the ESP32 firmware now samples at ~100 Hz
+    # (10 ms loop, was 3000 ms) and esp_joint_bridge forwards every sample
+    # with no throttling of its own (measured ~83 Hz end to end on
+    # /joint_commander/set_target), so 60 Hz here had become the slowest
+    # link in the chain. 120 matches so101_table_scene.py's --physics-hz
+    # default -- publishing faster than the sim steps physics wouldn't buy
+    # anything further.
+    rate_hz: 120.0
 
     # Ramp limit, rad/s. The commanded angle moves towards the target at most
     # this fast, so `ros2 param set` never makes the arm jump.
-    max_speed: 1.0
+    #
+    # 2026-10-12: raised from 1.0 -- with ESP32 teleop, 1.0 rad/s made the
+    # sim visibly lag behind fast real-arm motion. 6.0 rad/s is close to
+    # real-time (full ~90 deg/1.57 rad joint sweep in ~0.26s) while still
+    # smoothing out single noisy ESP samples instead of snapping to them.
+    max_speed: 6.0
 
     # Reject targets outside the URDF joint limits.
     clamp_to_limits: true

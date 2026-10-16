@@ -20,6 +20,18 @@
        under the Isaac Sim interpreter, not this package's own, so this entry is
        documentation and rosdep hygiene rather than something colcon enforces. -->
   <exec_depend>python3-yaml</exec_depend>
+  <!-- apriltag_distance_monitor.py and apriltag_distance.launch.py. -->
+  <exec_depend>apriltag_msgs</exec_depend>
+  <exec_depend>apriltag_ros</exec_depend>
+  <exec_depend>image_proc</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>astra_camera</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+  <!-- apriltag_custom_detector.py: Python bindings bundled by ros-jazzy-apriltag
+       (the same libapriltag apriltag_ros itself wraps), used directly instead
+       of going through the apriltag_ros node. -->
+  <exec_depend>apriltag</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
