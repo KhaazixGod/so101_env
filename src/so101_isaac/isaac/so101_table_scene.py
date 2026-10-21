@@ -9,6 +9,7 @@ Builds the scene procedurally (no Nucleus / online assets needed):
       /World/Table           table top + 4 legs, static colliders
       /World/Conveyor        belt (kinematic, PhysX surface velocity) + 4 legs, against --table-edge
       /World/so101           reference to so101.usda (Physics variant = physx)
+      /World/camera_link     RealSense D435i (--camera), see build_camera()
       /World/ActionGraph     ROS 2 bridge graph
 
 ROS 2 topics created by the action graph:
@@ -17,6 +18,10 @@ ROS 2 topics created by the action graph:
     /joint_command  (sensor_msgs/JointState)  subscribed -- arm targets in
     /clock          (rosgraph_msgs/Clock)     published
     /tf             (tf2_msgs/TFMessage)      published  (--publish-tf)
+    /camera/camera/color/image_raw                  (sensor_msgs/Image, rgb8)     --camera
+    /camera/camera/color/camera_info                (sensor_msgs/CameraInfo)      --camera
+    /camera/camera/aligned_depth_to_color/image_raw (sensor_msgs/Image, 32FC1 m)  --camera-depth
+    /camera/camera/aligned_depth_to_color/camera_info                             --camera-depth
 
 Run it with the Isaac Sim python, in a shell where ROS 2 Jazzy is sourced:
 
@@ -66,6 +71,31 @@ DEFAULT_DRIVE_CONFIG = os.path.normpath(
 # Fallback gains used when no --drive-config is given/found and a joint has no
 # --joint-drive override: matches the historical global --stiffness/--damping.
 HARDCODED_DEFAULT_GAINS = {"stiffness": 60.0, "damping": 4.0, "max_force": None}
+
+# ---------------------------------------------------------------------------
+# Intel RealSense D435i, from Intel's datasheet and realsense2_description.
+# ---------------------------------------------------------------------------
+# Colour imager: OmniVision OV2740, 1920x1080 at 1.4 um, FOV 69 x 42 deg.
+# Every colour mode keeps the full sensor height -- 16:9 modes scale the whole
+# sensor, 4:3 modes (640x480) crop its sides -- so the 42 deg vertical FOV
+# holds at any resolution, and the focal length in pixels is (H/2)/tan(21 deg):
+# 625 px at 480p, 938 px at 720p. Real units come within a couple of percent
+# of that (factory calibration, ~615 px at 480p) with zero distortion.
+D435I_COLOR_VFOV_DEG = 42.0
+D435I_SENSOR_HEIGHT_MM = 1080 * 1.4e-3
+# camera_link is the depth origin (left IR imager); the colour imager sits
+# 15 mm to its left (+y), the housing's centre 17.5 mm to its right (-y).
+D435I_DEPTH_TO_COLOR_Y = 0.015
+D435I_BODY_CENTER_Y = -0.0175
+D435I_BODY_SIZE = (0.025, 0.090, 0.025)  # m, x forward / y left / z up
+# Near: close enough not to cut off anything in front of the lens. Far: the
+# D435i's ~10 m maximum depth range.
+D435I_CLIPPING_RANGE = (0.01, 10.0)
+
+# realsense2_camera's TF frame names, so the sim and the real camera line up.
+CAMERA_LINK = "/World/camera_link"
+CAMERA_OPTICAL_FRAME = f"{CAMERA_LINK}/camera_color_optical_frame"
+CAMERA_PRIM = f"{CAMERA_OPTICAL_FRAME}/Camera"
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
@@ -200,6 +230,29 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     p.add_argument("--conveyor-test-cube-xy", type=float, nargs=2, default=None, metavar=("X", "Y"),
                    help="where to drop the test cube from, relative to the table centre "
                         "(same convention as --robot-xy); default: the belt's own centre")
+
+    # --- camera (Intel RealSense D435i) --------------------------------------
+    # Topic names default to realsense2_camera's own (camera_namespace:=camera,
+    # camera_name:=camera, align_depth.enable:=true), so the same subscriber
+    # works against the sim and the real camera.
+    p.add_argument("--camera", action=argparse.BooleanOptionalAction, default=True,
+                   help="add a RealSense D435i publishing colour + depth to ROS 2 (default: on)")
+    p.add_argument("--camera-xyz", type=float, nargs=3, default=(0.0, 0.45, 1.35), metavar=("X", "Y", "Z"),
+                   help="position of camera_link in the world, m -- table centre at x=y=0, floor at "
+                        "z=0; default: across the table from the robot, ~0.6 m above the top")
+    p.add_argument("--camera-rpy", type=float, nargs=3, default=(0.0, 36.0, -90.0),
+                   metavar=("ROLL", "PITCH", "YAW"),
+                   help="orientation of camera_link, degrees, ROS convention (x forward, z up): "
+                        "0 0 0 looks along world +X, positive pitch tilts it down; "
+                        "default: facing the robot, tilted 36 deg down")
+    p.add_argument("--camera-resolution", type=int, nargs=2, default=(640, 480), metavar=("W", "H"),
+                   help="colour (and aligned depth) resolution; D435i colour modes include "
+                        "640x480, 848x480, 1280x720 and 1920x1080")
+    p.add_argument("--camera-hz", type=float, default=30.0, help="publish rate, Hz (D435i: 6/15/30/60)")
+    p.add_argument("--camera-depth", action=argparse.BooleanOptionalAction, default=True,
+                   help="also publish depth aligned to the colour image (default: on)")
+    p.add_argument("--camera-namespace", default="/camera/camera",
+                   help="prefix of the camera topics (realsense2_camera's default: /camera/camera)")
 
     # --- ros 2 -------------------------------------------------------------
     p.add_argument("--state-topic", default="/joint_states")
@@ -974,6 +1027,74 @@ def build_lighting(stage: Usd.Stage) -> None:
     key_xform.AddRotateXYZOp().Set(Gf.Vec3f(-45.0, 0.0, 35.0))
 
 
+def build_camera(stage: Usd.Stage, args: argparse.Namespace) -> None:
+    """RealSense D435i colour camera, laid out like realsense2_description:
+
+        camera_link                    --camera-xyz/--camera-rpy; x forward, y left, z up
+          camera_color_optical_frame   15 mm left of camera_link; z forward, x right, y down
+            Camera                     the USD camera (looks down its -Z, +Y up)
+          Body                         the 90 x 25 x 25 mm housing, visual only
+
+    Move camera_link -- by flag or by dragging it in the GUI -- and the images
+    and TF follow. Its translate/rotateXYZ in the Property panel read the same
+    as --camera-xyz/--camera-rpy: USD's rotateXYZ composes as Rz*Ry*Rx, which
+    is exactly ROS's fixed-axis roll/pitch/yaw.
+    """
+    link = UsdGeom.Xform.Define(stage, Sdf.Path(CAMERA_LINK))
+    link.AddTranslateOp().Set(Gf.Vec3d(*args.camera_xyz))
+    link.AddRotateXYZOp().Set(Gf.Vec3f(*args.camera_rpy))
+
+    # The standard ROS link -> optical rotation, rpy (-90, 0, -90).
+    optical = UsdGeom.Xform.Define(stage, Sdf.Path(CAMERA_OPTICAL_FRAME))
+    optical.AddTranslateOp().Set(Gf.Vec3d(0.0, D435I_DEPTH_TO_COLOR_Y, 0.0))
+    optical.AddRotateXYZOp().Set(Gf.Vec3f(-90.0, 0.0, -90.0))
+
+    # Optical z-forward/y-down -> USD's -z-forward/y-up is half a turn about X.
+    camera = UsdGeom.Camera.Define(stage, Sdf.Path(CAMERA_PRIM))
+    camera.AddRotateXOp().Set(180.0)
+    # Only the focal length / aperture ratio reaches the pinhole projection
+    # (depth of field is off): fx = W * focalLength / horizontalAperture is
+    # exactly what ROS2CameraInfoHelper puts in K. Square pixels, so the
+    # horizontal aperture follows the image's aspect ratio.
+    width, height = args.camera_resolution
+    focal_mm = (D435I_SENSOR_HEIGHT_MM / 2.0) / math.tan(math.radians(D435I_COLOR_VFOV_DEG / 2.0))
+    camera.CreateProjectionAttr(UsdGeom.Tokens.perspective)
+    camera.CreateFocalLengthAttr(focal_mm)
+    camera.CreateVerticalApertureAttr(D435I_SENSOR_HEIGHT_MM)
+    camera.CreateHorizontalApertureAttr(D435I_SENSOR_HEIGHT_MM * width / height)
+    camera.CreateClippingRangeAttr(Gf.Vec2f(*D435I_CLIPPING_RANGE))
+
+    # No CollisionAPI: the arm and the cubes pass straight through it. Its front
+    # face sits 1 mm behind the lens, so it never shows up in its own image.
+    body = UsdGeom.Cube.Define(stage, Sdf.Path(f"{CAMERA_LINK}/Body"))
+    body.CreateSizeAttr(1.0)
+    body.CreateExtentAttr([Gf.Vec3f(-0.5, -0.5, -0.5), Gf.Vec3f(0.5, 0.5, 0.5)])
+    body.CreateDisplayColorAttr([Gf.Vec3f(0.12, 0.12, 0.13)])
+    body.AddTranslateOp().Set(Gf.Vec3d(-D435I_BODY_SIZE[0] / 2.0 - 0.001, D435I_BODY_CENTER_Y, 0.0))
+    body.AddScaleOp().Set(Gf.Vec3f(*D435I_BODY_SIZE))
+
+    fx = height / 2.0 / math.tan(math.radians(D435I_COLOR_VFOV_DEG / 2.0))
+    hfov = math.degrees(2.0 * math.atan(width / 2.0 / fx))
+    print(
+        f"[so101_table_scene] D435i camera at {tuple(args.camera_xyz)} rpy {tuple(args.camera_rpy)} deg: "
+        f"{width}x{height}, fx=fy={fx:.1f} px, FOV {hfov:.1f} x {D435I_COLOR_VFOV_DEG:.1f} deg",
+        flush=True,
+    )
+
+
+def _render_dt() -> float:
+    """Simulated seconds per app update, i.e. per rendered frame."""
+    try:
+        from isaacsim.core.rendering_manager import RenderingManager
+
+        dt = RenderingManager.get_dt()
+        if dt > 0.0:
+            return dt
+    except Exception:  # pragma: no cover - extension missing or not started
+        pass
+    return 1.0 / 60.0  # isaacsim.exp.base's loop runner default
+
+
 def export_scene(stage: Usd.Stage, path: str) -> str:
     """Write the stage to ``path`` with its asset paths relative to that file.
 
@@ -1169,6 +1290,79 @@ def _mark_actuated_dof(prim: Usd.Prim) -> None:
     prim.CreateAttribute("isaac:actuator", Sdf.ValueTypeNames.BoolArray).Set(flags)
 
 
+def _add_camera_publishers(args: argparse.Namespace, nodes: list, connections: list, values: list) -> None:
+    """Colour, aligned depth and their CameraInfo, named like realsense2_camera's.
+
+    Camera helpers only set up a Replicator writer the first time they run --
+    the writer then publishes every rendered frame on its own -- hence the
+    run-once gate in front of the render product, as in Isaac Sim's own ROS 2
+    camera graph (isaacsim.ros2.ui).
+    """
+    width, height = args.camera_resolution
+    ns = args.camera_namespace.rstrip("/")
+
+    # The app renders once per update; publish every (skip + 1)th frame.
+    dt = _render_dt()
+    skip = max(0, round(1.0 / (args.camera_hz * dt)) - 1)
+    actual_hz = 1.0 / ((skip + 1) * dt)
+    if abs(actual_hz - args.camera_hz) > 0.5:
+        carb.log_warn(
+            f"[so101_table_scene] --camera-hz {args.camera_hz:g} is not a whole fraction of the "
+            f"{1.0 / dt:g} Hz render rate; publishing at {actual_hz:g} Hz instead"
+        )
+
+    nodes += [
+        ("CameraRunOnce", "isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"),
+        ("CameraRenderProduct", "isaacsim.core.nodes.IsaacCreateRenderProduct"),
+    ]
+    connections += [
+        ("OnPlaybackTick.outputs:tick", "CameraRunOnce.inputs:execIn"),
+        ("CameraRunOnce.outputs:step", "CameraRenderProduct.inputs:execIn"),
+    ]
+    values += [
+        ("CameraRenderProduct.inputs:cameraPrim", [usdrt.Sdf.Path(CAMERA_PRIM)]),
+        ("CameraRenderProduct.inputs:width", width),
+        ("CameraRenderProduct.inputs:height", height),
+    ]
+
+    publishers = [
+        ("CameraColor", "isaacsim.ros2.bridge.ROS2CameraHelper", "rgb", f"{ns}/color/image_raw"),
+        ("CameraColorInfo", "isaacsim.ros2.bridge.ROS2CameraInfoHelper", None, f"{ns}/color/camera_info"),
+    ]
+    if args.camera_depth:
+        # Rendered from the colour camera itself, so it is aligned by
+        # construction. 32FC1 in metres -- the real camera sends 16UC1 in mm.
+        publishers += [
+            ("CameraDepth", "isaacsim.ros2.bridge.ROS2CameraHelper", "depth",
+             f"{ns}/aligned_depth_to_color/image_raw"),
+            ("CameraDepthInfo", "isaacsim.ros2.bridge.ROS2CameraInfoHelper", None,
+             f"{ns}/aligned_depth_to_color/camera_info"),
+        ]
+
+    frame_id = Sdf.Path(CAMERA_OPTICAL_FRAME).name
+    for name, node_type, data_type, topic in publishers:
+        nodes.append((name, node_type))
+        connections += [
+            ("CameraRenderProduct.outputs:execOut", f"{name}.inputs:execIn"),
+            ("CameraRenderProduct.outputs:renderProductPath", f"{name}.inputs:renderProductPath"),
+            ("Context.outputs:context", f"{name}.inputs:context"),
+        ]
+        values += [
+            (f"{name}.inputs:topicName", topic),
+            (f"{name}.inputs:frameId", frame_id),
+            (f"{name}.inputs:nodeNamespace", args.node_namespace),
+            (f"{name}.inputs:frameSkipCount", skip),
+        ]
+        if data_type is not None:
+            values.append((f"{name}.inputs:type", data_type))
+
+    print(
+        f"[so101_table_scene] camera topics at {actual_hz:g} Hz, frame_id {frame_id}:\n"
+        + "\n".join(f"  {topic}" for _name, _type, _data, topic in publishers),
+        flush=True,
+    )
+
+
 def build_action_graph(args: argparse.Namespace) -> None:
     """ROS 2 bridge graph: publish /joint_states, subscribe /joint_command."""
     keys = og.Controller.Keys
@@ -1227,6 +1421,11 @@ def build_action_graph(args: argparse.Namespace) -> None:
         ]
 
     if not args.no_publish_tf:
+        tf_prims = [ARTICULATION_ROOT]
+        if args.camera:
+            # world -> camera_link and world -> camera_color_optical_frame, the
+            # frame the images are stamped with.
+            tf_prims += [CAMERA_LINK, CAMERA_OPTICAL_FRAME]
         nodes.append(("PublishTF", "isaacsim.ros2.bridge.ROS2PublishTransformTree"))
         connections += [
             ("OnPlaybackTick.outputs:tick", "PublishTF.inputs:execIn"),
@@ -1234,9 +1433,12 @@ def build_action_graph(args: argparse.Namespace) -> None:
             ("ReadSimTime.outputs:simulationTime", "PublishTF.inputs:timeStamp"),
         ]
         values += [
-            ("PublishTF.inputs:targetPrims", [usdrt.Sdf.Path(ARTICULATION_ROOT)]),
+            ("PublishTF.inputs:targetPrims", [usdrt.Sdf.Path(path) for path in tf_prims]),
             ("PublishTF.inputs:nodeNamespace", args.node_namespace),
         ]
+
+    if args.camera:
+        _add_camera_publishers(args, nodes, connections, values)
 
     og.Controller.edit(
         {"graph_path": "/World/ActionGraph", "evaluator_name": "execution"},
@@ -1302,6 +1504,8 @@ def main() -> None:
     build_conveyor_test_cube(stage, args, grip_material)
     build_pickup_cube(stage, args, grip_material)
     build_lighting(stage)
+    if args.camera:
+        build_camera(stage, args)
 
     robot = add_robot(stage, args.usd)
     simulation_app.update()

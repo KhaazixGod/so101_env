@@ -57,6 +57,11 @@ itself, and `so101.usda` references its payloads with `./` paths. `build/`,
 machine it ran on into them. Don't copy them between machines; on a new
 machine clone the repo and run `colcon build` there.
 
+`--symlink-install` links files one by one, so edits to existing files take
+effect immediately, but a file that is *added* (e.g. by re-running
+`convert_urdf_to_usd.sh`) only reaches `install/` on the next `colcon build`.
+A scene that starts with `articulation root missing` usually means exactly that.
+
 The one thing that does differ per machine is the Isaac Sim install. Everything
 here (`ros2 launch`, `run_scene.sh`, `test/run_integration.sh`) defaults to
 `~/env_isaac/bin/python3` and honours `ISAAC_PYTHON` if it is set:
@@ -101,6 +106,7 @@ The scene is authored procedurally, so nothing is fetched from Nucleus:
   /World/Table             1.20 x 0.80 m top at z = 0.74, four legs, static colliders
   /World/Conveyor          belt + 4 legs, against --table-edge (isaacsim.asset.gen.conveyor)
   /World/so101             reference to so101.usda, Physics variant = "physx"
+  /World/camera_link       RealSense D435i (--camera), see "Camera" below
   /World/ActionGraph       the ROS 2 bridge
 ```
 
@@ -231,6 +237,54 @@ Leave `joints:` empty to let the global flags control every joint uniformly.
 Sim boots, with a message naming the bad joint/key/path -- run `--help` for
 the exact rules.
 
+### Camera (RealSense D435i)
+
+A D435i colour camera, on by default (`--no-camera` / `camera:=false` turns it
+off). It publishes under realsense2_camera's default names, so a node written
+against the real camera runs unchanged against the sim:
+
+| Topic | Type |
+|---|---|
+| `/camera/camera/color/image_raw` | `sensor_msgs/Image`, `rgb8` |
+| `/camera/camera/color/camera_info` | `sensor_msgs/CameraInfo` |
+| `/camera/camera/aligned_depth_to_color/image_raw` | `sensor_msgs/Image`, `32FC1`, metres |
+| `/camera/camera/aligned_depth_to_color/camera_info` | `sensor_msgs/CameraInfo` |
+
+```bash
+ros2 run rqt_image_view rqt_image_view /camera/camera/color/image_raw
+```
+
+From the datasheet: 42° vertical FOV at every resolution (69 x 42° at 16:9,
+54 x 42° at 640x480), so `fx = fy = (H/2) / tan(21°)` — 625 px at 640x480,
+938 px at 1280x720 — with the principal point at the centre and no distortion.
+640x480 at 30 Hz by default (`--camera-resolution`, `--camera-hz`).
+
+**Placing it.** `camera_link` is the device frame (x forward, y left, z up):
+
+```bash
+ros2 launch so101_isaac so101_isaac.launch.py \
+    camera_x:=0.0 camera_y:=0.45 camera_z:=1.35 \
+    camera_roll:=0.0 camera_pitch:=36.0 camera_yaw:=-90.0   # the default
+./run_scene.sh --camera-xyz 0 0.45 1.35 --camera-rpy 0 36 -90
+```
+
+Position is in the world: table centre at x = y = 0, floor at z = 0, table top
+at z = `--table-height`. Angles are degrees, ROS roll/pitch/yaw: `0 0 0` looks
+along world +X, positive pitch tilts the camera down. You can also drag
+`/World/camera_link` around in the GUI — the images and TF follow live, and its
+`translate`/`rotateXYZ` in the Property panel are exactly the numbers to pass
+back as flags.
+
+**Frames.** Images are stamped `camera_color_optical_frame` (z forward, x
+right, y down), 15 mm to the left of `camera_link` as on the real device. Both
+are published on `/tf` as children of `world`, next to the robot's links.
+
+**Differences from the real camera.** Depth is `32FC1` in metres, the real
+one sends `16UC1` in millimetres — handle both by checking `msg.encoding`.
+Depth is also perfect: no noise, no holes, nothing clipped at the D435i's
+~0.3 m minimum range. No IMU, no infrared streams, and no unaligned
+`depth/image_rect_raw`.
+
 ## 5. Topics
 
 | Topic | Type | Direction |
@@ -239,6 +293,7 @@ the exact rules.
 | `/joint_command` | `sensor_msgs/JointState` | you → Isaac Sim |
 | `/clock` | `rosgraph_msgs/Clock` | Isaac Sim → you |
 | `/tf` | `tf2_msgs/TFMessage` | Isaac Sim → you |
+| `/camera/camera/...` | colour + depth, see [Camera](#camera-realsense-d435i) | Isaac Sim → you |
 
 Graph: `IsaacReadJointState → ROS2PublishJointState` and
 `ROS2SubscribeJointState → IsaacArticulationController`, both driven by
