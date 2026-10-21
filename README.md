@@ -11,7 +11,7 @@ run_scene.sh           run the Isaac scene without ros2 launch
 
 | Thing | Where |
 |---|---|
-| Isaac Sim 6.0 (pip) | `~/env_isaac/bin/python3` — already installed |
+| Isaac Sim 6.0 (pip) | `~/env_isaac/bin/python3` by default — installed elsewhere, `export ISAAC_PYTHON=/path/to/env_isaac/bin/python3` |
 | ROS 2 Jazzy | `/opt/ros/jazzy` — needed for `colcon`, `rclpy`, the `ros2` CLI and `joint_commander` |
 
 ```bash
@@ -44,10 +44,25 @@ sudo apt install python3-colcon-common-extensions   # or: ros-dev-tools
 ```
 
 ```bash
-cd ~/Project/env_robot
+cd so101_env          # the root of this repository, wherever it was cloned
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install
 source install/setup.bash
+```
+
+Nothing under `src/` depends on where the workspace lives: launch files find
+their data through the ament index, the scene script finds its defaults next to
+itself, and `so101.usda` references its payloads with `./` paths. `build/`,
+`install/` and `log/` are the exception — colcon writes absolute paths of the
+machine it ran on into them. Don't copy them between machines; on a new
+machine clone the repo and run `colcon build` there.
+
+The one thing that does differ per machine is the Isaac Sim install. Everything
+here (`ros2 launch`, `run_scene.sh`, `test/run_integration.sh`) defaults to
+`~/env_isaac/bin/python3` and honours `ISAAC_PYTHON` if it is set:
+
+```bash
+export ISAAC_PYTHON=/opt/isaac/env_isaac/bin/python3   # e.g. in ~/.bashrc
 ```
 
 ## 3. Run
@@ -322,7 +337,7 @@ A smoke test of the scene itself:
 
 - `so101_description/urdf/so101.urdf.xacro` still references
   `so101_moveit_config` and `so101_gazebo`, which are not in this workspace
-  (they live in `~/Project/so101`). `view_robot.launch.py` will fail until those
+  (they live in the separate so101 workspace). `view_robot.launch.py` will fail until those
   are added or the xacro is trimmed, and it also needs `ros-jazzy-xacro`, which
   `ros-jazzy-desktop` does not pull in. Nothing here uses the xacro — the Isaac
   scene loads `so101.usda` directly.

@@ -21,7 +21,7 @@ ROS 2 topics created by the action graph:
 Run it with the Isaac Sim python, in a shell where ROS 2 Jazzy is sourced:
 
     source /opt/ros/jazzy/setup.bash
-    /home/pread/env_isaac/bin/python3 so101_table_scene.py
+    "${ISAAC_PYTHON:-$HOME/env_isaac/bin/python3}" so101_table_scene.py
 """
 
 from __future__ import annotations
@@ -29,6 +29,7 @@ from __future__ import annotations
 import argparse
 import math
 import os
+import signal
 import sys
 
 import yaml
@@ -392,6 +393,22 @@ resolve_drive_gains(ARGS)
 from isaacsim import SimulationApp  # noqa: E402
 
 simulation_app = SimulationApp({"headless": ARGS.headless})
+
+# SimulationApp installs its own SIGINT handler that runs a full Kit plugin
+# teardown, which routinely outlasts ros2 launch's 5 s grace period and gets
+# the process SIGTERM'd. Replace it (and handle SIGTERM too) with a flag so
+# the main loop exits between frames and main() can leave quickly. Installed
+# here, not in main(), so Ctrl-C during the (slow) scene build is covered too.
+stop_requested = False
+
+
+def request_stop(signum, frame):
+    global stop_requested
+    stop_requested = True
+
+
+signal.signal(signal.SIGINT, request_stop)
+signal.signal(signal.SIGTERM, request_stop)
 import omni.kit.app
 
 omni.kit.app.get_app().get_extension_manager().set_extension_enabled_immediate("omni.physx.bundle", True)
@@ -402,7 +419,7 @@ import omni.kit.app  # noqa: E402
 import omni.timeline  # noqa: E402
 import omni.usd  # noqa: E402
 import usdrt.Sdf  # noqa: E402
-from pxr import Gf, Sdf, Usd, UsdGeom, UsdLux, UsdPhysics, UsdShade  # noqa: E402
+from pxr import Gf, Sdf, Usd, UsdGeom, UsdLux, UsdPhysics, UsdShade, UsdUtils  # noqa: E402
 
 try:
     # Registered by the PhysX schema extension, so it only exists once kit is up.
@@ -957,6 +974,32 @@ def build_lighting(stage: Usd.Stage) -> None:
     key_xform.AddRotateXYZOp().Set(Gf.Vec3f(-45.0, 0.0, 35.0))
 
 
+def export_scene(stage: Usd.Stage, path: str) -> str:
+    """Write the stage to ``path`` with its asset paths relative to that file.
+
+    The live stage is anonymous, so add_robot() has to reference so101.usda by
+    absolute path. Left as-is, a saved scene would only open on a machine with
+    the exact same directory layout (/home/<user>/...); rewritten as ./ and ../
+    paths it opens anywhere the scene file and the workspace move together.
+    """
+    out_path = os.path.abspath(path)
+    stage.GetRootLayer().Export(out_path)
+
+    out_dir = os.path.dirname(out_path)
+
+    def to_relative(asset_path: str) -> str:
+        if not os.path.isabs(asset_path):
+            return asset_path
+        rel = os.path.relpath(asset_path, out_dir)
+        # A bare "foo.usda" is a USD *search* path; ./ and ../ anchor it to this file.
+        return rel if rel.startswith("..") else f"./{rel}"
+
+    layer = Sdf.Layer.FindOrOpen(out_path)
+    UsdUtils.ModifyAssetPaths(layer, to_relative)
+    layer.Save()
+    return out_path
+
+
 def add_robot(stage: Usd.Stage, usd_path: str) -> Usd.Prim:
     prim = stage.DefinePrim(ROBOT_PRIM, "Xform")
     prim.GetReferences().AddReference(os.path.abspath(usd_path))
@@ -1272,8 +1315,8 @@ def main() -> None:
     simulation_app.update()
 
     if args.save_usd:
-        stage.GetRootLayer().Export(os.path.abspath(args.save_usd))
-        print(f"[so101_table_scene] scene written to {os.path.abspath(args.save_usd)}", flush=True)
+        out_path = export_scene(stage, args.save_usd)
+        print(f"[so101_table_scene] scene written to {out_path}", flush=True)
 
     print(
         "[so101_table_scene] running.\n"
@@ -1287,16 +1330,20 @@ def main() -> None:
     timeline.play()
     steps = 0
     try:
-        while simulation_app.is_running():
+        while simulation_app.is_running() and not stop_requested:
             simulation_app.update()
             steps += 1
             if args.max_steps and steps >= args.max_steps:
                 print(f"[so101_table_scene] reached --max-steps {args.max_steps}, quitting")
                 break
-    except KeyboardInterrupt:
-        pass
     finally:
         timeline.stop()
+        if stop_requested:
+            # Nothing left to persist (--save-usd already ran), so skip Kit's
+            # slow teardown entirely.
+            print("[so101_table_scene] interrupted, exiting", flush=True)
+            sys.stderr.flush()
+            os._exit(0)
         simulation_app.close()
 
 

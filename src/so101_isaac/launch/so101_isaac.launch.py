@@ -10,6 +10,7 @@ its ROS 2 bridge find the sourced ROS 2 Jazzy libraries.
 """
 
 import os
+import shutil
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -43,10 +44,21 @@ def _launch_isaac(context, *_args, **_kwargs):
         "physics_hz", "publish_tf", "publish_clock", "save_usd",
     )}
 
+    # Where Isaac Sim is installed differs between machines -- fail with a hint
+    # instead of launch's bare "executable not found".
+    isaac_python = os.path.expanduser(cfg["isaac_python"])
+    if not (os.path.isfile(isaac_python) or shutil.which(isaac_python)):
+        raise RuntimeError(
+            f"Isaac Sim python not found: {isaac_python}\n"
+            "Point at this machine's install, e.g.\n"
+            "  export ISAAC_PYTHON=/path/to/env_isaac/bin/python3\n"
+            "or pass isaac_python:=/path/to/env_isaac/bin/python3"
+        )
+
     scene_script = os.path.join(get_package_share_directory(PKG), "isaac", "so101_table_scene.py")
 
     cmd = [
-        cfg["isaac_python"], scene_script,
+        isaac_python, scene_script,
         "--usd", cfg["robot_usd"],
         "--table-height", cfg["table_height"],
         "--table-size", cfg["table_length"], cfg["table_width"],
@@ -161,8 +173,9 @@ def generate_launch_description() -> LaunchDescription:
     declared = [
         DeclareLaunchArgument(
             "isaac_python",
-            default_value=os.path.expanduser("~/env_isaac/bin/python3"),
-            description="interpreter of the Isaac Sim installation",
+            default_value=os.environ.get("ISAAC_PYTHON", os.path.expanduser("~/env_isaac/bin/python3")),
+            description="interpreter of the Isaac Sim installation; defaults to $ISAAC_PYTHON, "
+                        "then ~/env_isaac/bin/python3",
         ),
         DeclareLaunchArgument(
             "robot_usd",

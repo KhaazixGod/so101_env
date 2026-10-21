@@ -14,6 +14,12 @@ ROS_SETUP="${ROS_SETUP:-/opt/ros/jazzy/setup.bash}"
 ISAAC_PYTHON="${ISAAC_PYTHON:-$HOME/env_isaac/bin/python3}"
 WS="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+if [[ ! -x "$ISAAC_PYTHON" ]]; then
+  echo "error: Isaac Sim python not found at $ISAAC_PYTHON" >&2
+  echo "       export ISAAC_PYTHON=/path/to/env_isaac/bin/python3 for this machine's install." >&2
+  exit 1
+fi
+
 ISAAC_ROOT="$("$ISAAC_PYTHON" -c 'import isaacsim, os; print(os.path.dirname(isaacsim.__file__))')"
 ISAAC_ROS2_LIB="$ISAAC_ROOT/exts/isaacsim.ros2.core/jazzy/lib"
 
